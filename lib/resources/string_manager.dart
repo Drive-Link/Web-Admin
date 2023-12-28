@@ -1,6 +1,6 @@
 
 class StringManager {
-  static const String appName = "DriveLink";
+  static const String appName = "Drivelink";
   static const String dmSans = "DMSans";
   static const String welcomeText = "Welcome!";
   static const String emailAddress = "Email Address";
@@ -31,6 +31,35 @@ class StringManager {
   static const String details = "Details";
   static const String reviews = "Reviews";
   static const String trips = "Trips";
+  static const String driversDetails = "Drivers Details";
+  static const String profileDetails = "Profile Details";
+  static const String sendNotifications = "Send Notifications";
+  static const String notificationsInfo = "Kindly fill in the following fields to send a notification to the users";
+  static const String userType = "User Type";
+  static const String notificationTitle = "Notification Title";
+  static const String message = "Message";
+  static const String scheduleTime = "Schedule Time";
+  static const String send = "Send";
+  static const String rides = "Rides";
+  static const String totalAmountEarned = "Total Amount Earned";
+  static const String totalAmountWithdrawn = "Total Amount Withdrawn";
+  static const String balance = "Balance";
+  static const String createDriver = "Create Driver";
+  static const String stepOne = "Step 1 of 2";
+  static const String driversInfo = "Kindly fill in the following fields to verify the driver";
+  static const String uploadDocuments = "Kindly upload the required documents to verify the driver";
+  static const String profilePicture = "Profile Picture";
+  static const String driversLicense = "Driver's License";
+  static const String identificationCard = "Identification Card";
+  static const String medicalReport = "Medical Report";
+  static const String accountDetails = "Account Details";
+  static const String next = "Next";
+  static const String confirmPassword = "Confirm Password";
+  static const String stepTwo = "Step 2 of 2";
+  static const String userActivity = "User Activity";
+  static const String rating = "Rating";
+
+
 
 
 }

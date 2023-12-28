@@ -1,7 +1,5 @@
 import 'package:drivelink_admin/constants/colors.dart';
-import 'package:drivelink_admin/resources/assets_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../helpers/custom_textfield.dart';
 import '../../helpers/elevated_button.dart';
@@ -53,7 +51,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 300,
+                      height: 200,
+                    ),
+                    const Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        StringManager.welcomeText,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 28,
+                            fontFamily: StringManager.dmSans,
+                            fontWeight: FontWeight.w900),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 80,
                     ),
                     CustomTextField(
                       hintText: StringManager.emailAddress,
