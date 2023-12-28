@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       title: 'Admin Dashboard',
       debugShowCheckedModeBanner: false,
-      home: DashboardScreen(),
+      home: LoginScreen(),
     );
   }
 }
