@@ -5,4 +5,7 @@ const String tripsRoute = "trips";
 const String verificationRoute = "verification";
 const String reviewsRoute = "reviews";
 const String settingsRoute = "settings";
+const String loginRoute = "login";
+const String registerRoute = "register";
+const String pageControllerRoute = "page";
 

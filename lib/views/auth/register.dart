@@ -1,9 +1,8 @@
-import 'package:drivelink_admin/constants/colors.dart';
-import 'package:drivelink_admin/constants/constants.dart';
 import 'package:drivelink_admin/routing/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../constants/colors.dart';
 import '../../helpers/custom_textfield.dart';
 import '../../helpers/elevated_button.dart';
 import '../../helpers/loading.dart';
@@ -12,21 +11,25 @@ import '../../provider/auth_provider.dart';
 import '../../resources/string_manager.dart';
 import '../../services/navigation_service.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class Register extends StatefulWidget {
+  const Register({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterState extends State<Register> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   bool obscurePassword = true;
+  // TextEditingController emailController = TextEditingController();
+  // TextEditingController firstNameController = TextEditingController();
+  // TextEditingController lastNameController = TextEditingController();
+  // TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
-
-    return authProvider.status == Status.Authenticating? Loading() :  Scaffold(
+    return authProvider.status == Status.Authenticating? Loading() : Scaffold(
       key: _key,
       backgroundColor: newPrimaryColor,
       body: Center(
@@ -77,6 +80,30 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 80,
                     ),
                     CustomTextField(
+                      hintText: StringManager.firstName,
+                      controller: authProvider.firstName,
+                      suffixIcon: const Icon(
+                        Icons.person,
+                        color: showHideColor,
+                        size: 20,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    CustomTextField(
+                      hintText: StringManager.lastName,
+                      controller: authProvider.lastName,
+                      suffixIcon: const Icon(
+                        Icons.person,
+                        color: showHideColor,
+                        size: 20,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    CustomTextField(
                       hintText: StringManager.emailAddress,
                       controller: authProvider.email,
                       suffixIcon: const Icon(
@@ -86,12 +113,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     const SizedBox(
-                      height: 25,
+                      height: 15,
                     ),
                     CustomTextField(
                       hintText: StringManager.password,
-                      obscureText: obscurePassword,
                       controller: authProvider.password,
+                      obscureText: obscurePassword,
                       suffixIcon: Icon(
                         obscurePassword
                             ? Icons.visibility
@@ -123,44 +150,43 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                     const SizedBox(
-                      height: 70,
+                      height: 45,
                     ),
                     BtnElevated(
-                        onPressed: () async {
-                          if(!await authProvider.signIn()){
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text("Login failed!"))
-                            );
-                            return;
-                          }
-                          authProvider.clearController();
-                          locator<NavigationService>().globalNavigateTo(dashboardRoute, context);
+                        onPressed: () async{
+                         if(!await authProvider.signUp()){
+                           ScaffoldMessenger.of(context).showSnackBar(
+                               const SnackBar(content: Text("Registration failed!"))
+
+                           );
+                           return;
+                         }
+                         authProvider.clearController();
+                         locator<NavigationService>().globalNavigateTo(dashboardRoute, context);
                         },
-                        child: Text(StringManager.login.toUpperCase(),
+                        child: Text(StringManager.register.toUpperCase(),
                             style: const TextStyle(
                                 color: primaryColor,
                                 fontFamily: StringManager.dmSans,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700))),
-                    const SizedBox(
-                      height: 15,
-                    ),
+                    const SizedBox(height: 15,),
                     GestureDetector(
                       onTap: (){
-                        locator<NavigationService>().globalNavigateTo(registerRoute, context);
+                        locator<NavigationService>().globalNavigateTo(loginRoute, context);
                       },
                       child: const Center(
                         child: Text.rich(
                           TextSpan(
                             children: [
                               TextSpan(
-                                  text: StringManager.doNotHave,
+                                  text: StringManager.alreadyHave,
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500)),
                               TextSpan(
-                                  text: StringManager.register,
+                                  text: StringManager.login,
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 16,

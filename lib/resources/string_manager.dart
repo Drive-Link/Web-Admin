@@ -4,8 +4,13 @@ class StringManager {
   static const String dmSans = "DMSans";
   static const String welcomeText = "Welcome!";
   static const String emailAddress = "Email Address";
+  static const String firstName = "First Name";
+  static const String lastName = "Last Name";
   static const String password = "Password";
-  static const String login = "LOGIN";
+  static const String login = "Login";
+  static const String alreadyHave = "Already have an account?";
+  static const String doNotHave = "Don't have an account?";
+  static const String register = "Register";
   static const String forgotPass = "Forgot Password";
   static const String remember = "Remember me";
   static const String dashboard = "Dashboard";
