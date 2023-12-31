@@ -29,10 +29,12 @@ class SideMenu extends StatelessWidget {
               DrawerListTile(
                 title: StringManager.dashboard,
                 imageSrc: AssetManager.dashboardSvg,
-                active: appProvider.currentPage == DisplayedPage.DASHBOARD,
+                active:
+                    appProvider.currentPage == DisplayedPage.DASHBOARDCONTENT,
                 press: () {
-                  appProvider.changeCurrentPage(DisplayedPage.DASHBOARD);
-                  locator<NavigationService>().navigateTo(dashboardRoute);
+                  appProvider.changeCurrentPage(DisplayedPage.DASHBOARDCONTENT);
+                  locator<NavigationService>()
+                      .navigateTo(dashboardContentRoute);
                 },
               ),
               DrawerListTile(
@@ -141,7 +143,7 @@ class DrawerListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: press,
-      tileColor: active ? primaryColor : null,
+      tileColor: active ? newPrimaryColor : null,
       horizontalTitleGap: 0.0,
       leading: SvgPicture.asset(
         imageSrc,

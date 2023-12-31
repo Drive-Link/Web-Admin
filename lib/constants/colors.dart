@@ -14,3 +14,4 @@ const Color indicatorColor = Color(0xFFE97E00);
 const Color containerColor = Color(0x99012964);
 const Color redColor = Color(0xFFF80000);
 const Color newPrimaryColor = Color(0xFF2E396D);
+const Color tealColor = Color(0xFF169D00);
