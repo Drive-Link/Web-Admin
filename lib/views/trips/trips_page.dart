@@ -1,4 +1,5 @@
 
+import 'package:drivelink_admin/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class TripsPage extends StatefulWidget {
@@ -12,7 +13,7 @@ class _TripsPageState extends State<TripsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      backgroundColor: tealColor.withOpacity(0.2),
     );
   }
 }
