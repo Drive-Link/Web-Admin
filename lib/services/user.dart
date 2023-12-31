@@ -33,7 +33,7 @@ class UserServices {
         return UserModel.fromSnapshot(doc);
       });
 
-  Future<List<UserModel>> getAllUsers() async =>
+  Future<List<UserModel>> getAllPassengers() async =>
       firebaseFirestore.collection(usersCollection).get().then((result) {
         List<UserModel> users = [];
         for (DocumentSnapshot user in result.docs) {
