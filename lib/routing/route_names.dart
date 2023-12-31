@@ -8,4 +8,5 @@ const String settingsRoute = "settings";
 const String loginRoute = "login";
 const String registerRoute = "register";
 const String pageControllerRoute = "page";
+const String dashboardContentRoute = "content";
 

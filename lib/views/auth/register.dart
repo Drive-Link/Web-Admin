@@ -21,10 +21,6 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   bool obscurePassword = true;
-  // TextEditingController emailController = TextEditingController();
-  // TextEditingController firstNameController = TextEditingController();
-  // TextEditingController lastNameController = TextEditingController();
-  // TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

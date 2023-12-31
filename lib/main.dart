@@ -1,17 +1,16 @@
 import 'package:drivelink_admin/locator.dart';
+import 'package:drivelink_admin/provider/app_provider.dart';
 import 'package:drivelink_admin/provider/auth_provider.dart';
+import 'package:drivelink_admin/provider/tables.dart';
 import 'package:drivelink_admin/routing/route_names.dart';
 import 'package:drivelink_admin/routing/router.dart';
 import 'package:drivelink_admin/views/auth/login.dart';
-import 'package:drivelink_admin/views/auth/register.dart';
 import 'package:drivelink_admin/views/home/dashboard_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'constants/constants.dart';
-import 'helpers/loading.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,9 +26,13 @@ void main() async {
     await Firebase.initializeApp();
   }
   setupLocator();
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider.value(value: AuthProvider.initialize()),
-  ], child: const MyApp(),
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider.value(value: AppProvider.init()),
+      ChangeNotifierProvider.value(value: AuthProvider.initialize()),
+      ChangeNotifierProvider.value(value: TablesProvider.init()),
+    ],
+    child: const MyApp(),
   ));
 }
 
@@ -68,7 +71,6 @@ class AppPagesController extends StatelessWidget {
           );
         }
 
-        // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
           print(authProvider.status.toString());
           switch (authProvider.status) {
@@ -84,7 +86,6 @@ class AppPagesController extends StatelessWidget {
           }
         }
 
-        // Otherwise, show something whilst waiting for initialization to complete
         return const Scaffold(
           body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
