@@ -3,6 +3,7 @@ import 'package:drivelink_admin/views/auth/login.dart';
 import 'package:drivelink_admin/views/auth/register.dart';
 import 'package:drivelink_admin/views/components/dashboard_content.dart';
 import 'package:drivelink_admin/views/drivers/drivers_page.dart';
+import 'package:drivelink_admin/views/passengers/passengers_details.dart';
 import 'package:drivelink_admin/views/passengers/passengers_page.dart';
 import 'package:drivelink_admin/views/reviews/reviews_page.dart';
 import 'package:drivelink_admin/views/trips/trips_page.dart';

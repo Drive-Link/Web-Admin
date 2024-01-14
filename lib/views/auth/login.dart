@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
 
-    return authProvider.status == Status.Authenticating? Loading() :  Scaffold(
+    return authProvider.status == Status.Authenticating? const Loading() :  Scaffold(
       key: _key,
       backgroundColor: newPrimaryColor,
       body: Center(
