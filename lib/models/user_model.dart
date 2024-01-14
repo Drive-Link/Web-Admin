@@ -1,19 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
-  static const ID = "uid";
+  //static const ID = "id";
   static const FIRSTNAME = "first_name";
   static const LASTNAME = "last_name";
   static const EMAILADDRESS = "email_address";
   static const PHONENUMBER = "phone_number";
-  static const LOCATION = "state";
+  static const STATE = "state";
+  static const COUNTRY = "country";
 
   String? _id;
   String? _firstName;
   String? _emailAddress;
   String? _phoneNumber;
   String? _lastName;
-  String? _location;
+  String? _state;
+  String? _country;
 
 //  getters
   String get firstName => _firstName!;
@@ -24,17 +26,20 @@ class UserModel {
 
   String get phoneNumber => _phoneNumber!;
 
-  String get location => _location!;
+  String get state => _state!;
+  
+  String get country => _country!;
 
-  String get id => _id!;
+  //String get id => _id!;
 
   UserModel.fromSnapshot(DocumentSnapshot snapshot) {
     final Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     _firstName = data?[FIRSTNAME] ?? "";
     _lastName = data?[LASTNAME] ?? "";
     _phoneNumber = data?[PHONENUMBER] ?? "";
-    _location = data?[LOCATION] ?? "";
+    _state = data?[STATE] ?? "";
     _emailAddress = data?[EMAILADDRESS] ?? "";
-    _id = data?[ID] ?? "";
+    _country = data?[COUNTRY] ?? "";
+    //_id = data?[ID] ?? "";
   }
 }

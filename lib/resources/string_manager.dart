@@ -6,6 +6,8 @@ class StringManager {
   static const String emailAddress = "Email Address";
   static const String firstName = "First Name";
   static const String lastName = "Last Name";
+  static const String name = "Name";
+  static const String sN = "S/N";
   static const String password = "Password";
   static const String login = "Login";
   static const String alreadyHave = "Already have an account?";
@@ -15,7 +17,9 @@ class StringManager {
   static const String remember = "Remember me";
   static const String dashboard = "Dashboard";
   static const String drivers = "Drivers";
+  static const String allDrivers = "All Drivers";
   static const String passengers = "Passengers";
+  static const String passengersDetails = "Passengers Details";
   static const String verification = "Verification";
   static const String totalUsers = "Total Users";
   static const String pendingDrivers = "Pending Drivers";
@@ -63,6 +67,7 @@ class StringManager {
   static const String stepTwo = "Step 2 of 2";
   static const String userActivity = "User Activity";
   static const String rating = "Rating";
+  static const String previous = "Previous";
 
 
 

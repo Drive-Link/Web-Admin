@@ -7,26 +7,22 @@ import '../services/user.dart';
 class TablesProvider with ChangeNotifier {
   List<DatatableHeader> passengersTableHeader = [
     DatatableHeader(
-        text: "S/N", value: "id", show: true, textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Name",
-        value: "first_name",
-        show: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
         text: "Email Address",
         value: "email_address",
+        sortable: true,
         show: true,
         textAlign: TextAlign.left),
     DatatableHeader(
         text: "Phone Number",
-        value: "phone_number",
+        value: "first_name",
         flex: 2,
+        sortable: true,
         show: true,
         textAlign: TextAlign.left),
     DatatableHeader(
         text: "Location",
-        value: "location",
+        value: "state",
+        sortable: true,
         show: true,
         textAlign: TextAlign.left),
   ];
@@ -39,6 +35,8 @@ class TablesProvider with ChangeNotifier {
   List<Map<String, dynamic>> passengersTableSource = [];
   List<Map<String, dynamic>> selecteds = [];
   String selectableKey = "id";
+  String? sortColumn;
+  bool sortAscending = true;
 
   bool isLoading = true;
   final UserServices _userServices = UserServices();
@@ -57,14 +55,20 @@ class TablesProvider with ChangeNotifier {
     if (_users != null) {
       for (UserModel userData in _users) {
         temps.add({
-          "id": userData.id,
-          "email": userData.emailAddress,
+         // "id": userData.id,
+          "email_address": userData.emailAddress,
           "first_name": userData.firstName,
           "last_name": userData.lastName,
-          "location": userData.location,
-          "phone_number": userData.phoneNumber,
+          "state": userData.state,
         });
+        //print(userData.id);
+        print(userData.lastName);
+        print(userData.firstName);
+        print(userData.state);
+        print(userData.emailAddress);
       }
+    } else {
+      print("Error");
     }
     isLoading = false;
     notifyListeners();
@@ -75,8 +79,25 @@ class TablesProvider with ChangeNotifier {
     isLoading = true;
     notifyListeners();
     await _loadFromFirebase();
-    passengersTableSource.addAll(_getUsersData());
+    // Initialize passengersTableSource as an empty list
+    passengersTableSource = _getUsersData();
+    print("Hello");
+    print(_getUsersData());
+    print("Now");
     isLoading = false;
+    notifyListeners();
+  }
+
+  onSort(dynamic value) {
+    sortColumn = value;
+    sortAscending = !sortAscending;
+    if (sortAscending) {
+      passengersTableSource
+          .sort((a, b) => b[sortColumn].compareTo(a[sortColumn]));
+    } else {
+      passengersTableSource
+          .sort((a, b) => a[sortColumn].compareTo(b[sortColumn]));
+    }
     notifyListeners();
   }
 

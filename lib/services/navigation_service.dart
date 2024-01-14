@@ -13,10 +13,8 @@ class NavigationService {
   Future<dynamic> globalNavigateTo(
       String routeName, BuildContext context) async {
     final currentContext = context;
-    if (currentContext != null) {
-      return Navigator.of(currentContext).pushNamed(routeName);
+    return Navigator.of(currentContext).pushNamed(routeName);
     }
-  }
 
   void goBack() {
     final currentState = navigatorKey.currentState;

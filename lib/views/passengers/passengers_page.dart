@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drivelink_admin/constants/colors.dart';
 import 'package:drivelink_admin/resources/string_manager.dart';
+import 'package:drivelink_admin/views/passengers/passengers_details.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:responsive_table/responsive_table.dart';
-import '../../provider/tables.dart';
+import '../../helpers/loading.dart';
+import '../../models/user_model.dart';
 
 class PassengersPage extends StatefulWidget {
   const PassengersPage({super.key});
@@ -13,98 +14,218 @@ class PassengersPage extends StatefulWidget {
 }
 
 class _PassengersPageState extends State<PassengersPage> {
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
+  int _currentPage = 1;
 
   @override
   Widget build(BuildContext context) {
-    final TablesProvider tablesProvider = Provider.of<TablesProvider>(context);
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Container(
-              margin: const EdgeInsets.all(10),
-              padding: const EdgeInsets.all(0),
-              constraints: const BoxConstraints(
-                maxHeight: 700,
-              ),
-              child: Card(
-                elevation: 1,
-                shadowColor: Colors.black,
-                clipBehavior: Clip.none,
-                child: ResponsiveDatatable(
-                  title: !tablesProvider.isSearch
-                      ? const Text(
-                          StringManager.passengers,
-                          style: TextStyle(
-                              color: primaryColor,
-                              fontSize: 16,
-                              fontFamily: StringManager.dmSans),
-                        )
-                      : null,
-                  actions: const [
-                    Expanded(
-                        child: Text(
-                      StringManager.seeAll,
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('users').snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: Loading());
+        }
+
+        var userModels = snapshot.data!.docs
+            .map((doc) => UserModel.fromSnapshot(doc))
+            .toList();
+
+        // Paginate the data
+        int startIndex = (_currentPage - 1) * _rowsPerPage;
+        int endIndex = startIndex + _rowsPerPage;
+        List<UserModel> paginatedData = userModels.sublist(
+            startIndex, endIndex.clamp(0, userModels.length));
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: PaginatedDataTable(
+                  horizontalMargin: 12,
+                  header: const Text(
+                    StringManager.passengers,
+                    style: TextStyle(
+                        color: newPrimaryColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: StringManager.dmSans),
+                  ),
+                  columns: const [
+                    DataColumn(
+                        label: Text(
+                      StringManager.sN,
                       style: TextStyle(
-                          color: primaryColor,
-                          fontSize: 14,
-                          fontFamily: StringManager.dmSans),
-                    ))
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700),
+                    )),
+                    DataColumn(
+                        label: Text(
+                      StringManager.name,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700),
+                    )),
+                    DataColumn(
+                        label: Text(
+                      StringManager.emailAddress,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700),
+                    )),
+                    DataColumn(
+                        label: Text(
+                      StringManager.phoneNumber,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700),
+                    )),
+                    DataColumn(
+                        label: Text(
+                      StringManager.location,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700),
+                    )),
                   ],
-                  headers: tablesProvider.passengersTableHeader ?? [],
-                  source: tablesProvider.passengersTableSource ?? [],
-                  selecteds: tablesProvider.selecteds,
-                  autoHeight: false,
-                  onTabRow: (data) {
-                    print(data);
+                  source: PassengersTableSource(
+                    paginatedData,
+                    onRowTap: (user) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PassengersDetailsPage(
+                            user: user,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  rowsPerPage: _rowsPerPage,
+                  availableRowsPerPage: const [5, 10, 20],
+                  onPageChanged: (int pageIndex) {
+                    setState(() {
+                      _currentPage = pageIndex + 1;
+                    });
                   },
-                  isLoading: tablesProvider.isLoading,
-                  footers: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: const Text("Rows per page:"),
-                    ),
-                    if (tablesProvider.perPages != null)
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: DropdownButton(
-                            value: tablesProvider.currentPerPage,
-                            items: tablesProvider.perPages
-                                .map((e) => DropdownMenuItem(
-                                      value: e,
-                                      child: Text("$e"),
-                                    ))
-                                .toList(),
-                            onChanged: (value) {}),
-                      ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Text(
-                          "${tablesProvider.currentPage} - ${tablesProvider.currentPage} of ${tablesProvider.total}"),
-                    ),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.arrow_back_ios,
-                        size: 16,
-                      ),
-                      onPressed: tablesProvider.previous,
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios, size: 16),
-                      onPressed: tablesProvider.next,
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                    )
-                  ],
+                  onRowsPerPageChanged: (int? selectedRowsPerPage) {
+                    setState(() {
+                      _rowsPerPage = selectedRowsPerPage!;
+                    });
+                  },
                 ),
-              ))
-        ],
-      ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                      'Showing $_currentPage-$_rowsPerPage of ${userModels.length}'),
+                  Row(
+                    children: [
+                      if (_currentPage > 1)
+                        TextButton(
+                          onPressed: () {
+                            setState(() {
+                              _currentPage--;
+                            });
+                          },
+                          child: const Text(
+                            StringManager.previous,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                      if (paginatedData.length == _rowsPerPage)
+                        TextButton(
+                          onPressed: () {
+                            setState(() {
+                              _currentPage++;
+                            });
+                          },
+                          child: const Text(
+                            StringManager.next,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
+}
+
+class PassengersTableSource extends DataTableSource {
+  final List<UserModel> _userModels;
+  final Function(UserModel) onRowTap;
+
+  PassengersTableSource(this._userModels, {required this.onRowTap});
+
+  @override
+  DataRow? getRow(int index) {
+    if (index >= _userModels.length) {
+      return null;
+    }
+    final UserModel user = _userModels[index];
+    return DataRow(
+      cells: [
+        DataCell(GestureDetector(
+            onTap: () {
+              onRowTap(user);
+            },
+            child: Text((index + 1).toString()))),
+        DataCell(GestureDetector(
+            onTap: () {
+              onRowTap(user);
+            },
+            child: Text('${user.firstName} ${user.lastName}'))),
+        DataCell(GestureDetector(
+            onTap: () {
+              onRowTap(user);
+            },
+            child: Text(user.emailAddress))),
+        DataCell(GestureDetector(
+            onTap: () {
+              onRowTap(user);
+            },
+            child: Text(user.phoneNumber))),
+        DataCell(GestureDetector(
+            onTap: () {
+              onRowTap(user);
+            },
+            child: Text('${user.state}, ${user.country}'))),
+      ],
+    );
+  }
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount => _userModels.length;
+
+  @override
+  int get selectedRowCount => 0;
 }
