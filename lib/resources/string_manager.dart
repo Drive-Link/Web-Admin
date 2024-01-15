@@ -50,8 +50,8 @@ class StringManager {
   static const String scheduleTime = "Schedule Time";
   static const String send = "Send";
   static const String rides = "Rides";
-  static const String totalAmountEarned = "Total Amount Earned";
-  static const String totalAmountWithdrawn = "Total Amount Withdrawn";
+  static const String totalAmountEarned = "Total Amount Earned:";
+  static const String totalAmountWithdrawn = "Total Amount Withdrawn:";
   static const String balance = "Balance";
   static const String createDriver = "Create Driver";
   static const String stepOne = "Step 1 of 2";
