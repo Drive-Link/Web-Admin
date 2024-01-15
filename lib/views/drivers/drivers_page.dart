@@ -4,6 +4,7 @@ import 'package:drivelink_admin/helpers/loading.dart';
 import 'package:drivelink_admin/resources/string_manager.dart';
 import 'package:flutter/material.dart';
 import '../../models/user_model.dart';
+import 'drivers_details_page.dart';
 
 class DriversPage extends StatefulWidget {
   const DriversPage({super.key});
@@ -130,7 +131,17 @@ class _DriversPageState extends State<DriversPage> {
                           fontWeight: FontWeight.w700),
                     )),
                   ],
-                  source: DriversTableSource(paginatedData),
+                  source: DriversTableSource(paginatedData,
+                    onRowTap: (user) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DriversDetailsPage(
+                            user: user,
+                          ),
+                        ),
+                      );
+                    },),
                   rowsPerPage: _rowsPerPage,
                   availableRowsPerPage: const [5, 10, 20],
                   onPageChanged: (int pageIndex) {
@@ -199,8 +210,9 @@ class _DriversPageState extends State<DriversPage> {
 
 class DriversTableSource extends DataTableSource {
   final List<UserModel> _userModels;
+  final Function(UserModel) onRowTap;
 
-  DriversTableSource(this._userModels);
+  DriversTableSource(this._userModels, {required this.onRowTap});
 
   @override
   DataRow? getRow(int index) {
@@ -211,7 +223,11 @@ class DriversTableSource extends DataTableSource {
     return DataRow(
       cells: [
         DataCell(Text((index + 1).toString())),
-        DataCell(Text('${user.firstName} ${user.lastName}')),
+        DataCell(GestureDetector(
+          onTap: (){
+            onRowTap(user);
+          },
+            child: Text('${user.firstName} ${user.lastName}'))),
         DataCell(Text(user.emailAddress)),
         DataCell(Text(user.phoneNumber)),
         DataCell(Text('${user.state}, ${user.country}')),

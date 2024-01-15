@@ -179,66 +179,68 @@ class _PassengersDetailsPageState extends State<PassengersDetailsPage> {
               height: 1,
             ),
             Expanded(
-                child: Column(
+                child: SingleChildScrollView(
+                  child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text(
-                  StringManager.profileDetails,
-                  style: TextStyle(
-                      color: newPrimaryColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: StringManager.dmSans),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                _buildTextField(
-                    label: StringManager.emailAddress,
-                    controller: _emailAddressController,
-                    icon: Icons.email),
-                const SizedBox(
-                  height: 5,
-                ),
-                _buildTextField(
-                    label: StringManager.phoneNumber,
-                    controller: _phoneNumberController,
-                    icon: Icons.call),
-                const SizedBox(
-                  height: 5,
-                ),
-                _buildTextField(
-                  label: StringManager.location,
-                  controller: _locationController,
-                  icon: Icons.location_on_outlined,
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                if (editMode)
-                  Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      height: 60,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: newPrimaryColor,
-                          borderRadius: BorderRadius.circular(12.0)),
-                      child: Center(
-                        child: Text(StringManager.edit.toUpperCase(),
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontFamily: StringManager.dmSans,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700)),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
+                    StringManager.profileDetails,
+                    style: TextStyle(
+                        color: newPrimaryColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: StringManager.dmSans),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  _buildTextField(
+                      label: StringManager.emailAddress,
+                      controller: _emailAddressController,
+                      icon: Icons.email),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  _buildTextField(
+                      label: StringManager.phoneNumber,
+                      controller: _phoneNumberController,
+                      icon: Icons.call),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  _buildTextField(
+                    label: StringManager.location,
+                    controller: _locationController,
+                    icon: Icons.location_on_outlined,
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  if (editMode)
+                    Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        height: 60,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: newPrimaryColor,
+                            borderRadius: BorderRadius.circular(12.0)),
+                        child: Center(
+                          child: Text(StringManager.edit.toUpperCase(),
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: StringManager.dmSans,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700)),
+                        ),
                       ),
                     ),
-                  ),
               ],
-            ))
+            ),
+                ))
           ],
         ),
       ),
