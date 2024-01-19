@@ -32,16 +32,32 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Center(
         child: Row(
           children: [
-            const Expanded(
+            Expanded(
                 child: Center(
-              child: Text(
-                StringManager.appName,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 52,
-                    fontFamily: StringManager.dmSans,
-                    fontWeight: FontWeight.w900),
-              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/images/drivelink_logo.png',
+                  height: 42, width: 43,),
+                  const SizedBox(width: 10),
+                  Container(
+                    height: 43,
+                    width: 1,
+                    decoration: const BoxDecoration(
+                      color: Colors.white
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  const Text(
+                    StringManager.appName,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 42,
+                        fontFamily: StringManager.dmSans,
+                        fontWeight: FontWeight.w900),
+                  ),
+                ],
+              )
             )),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 80),
@@ -128,17 +144,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     BtnElevated(
                         onPressed: () async {
                           if(!await authProvider.signIn()){
+                            if(!mounted) return;
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(content: Text("Login failed!"))
                             );
                             return;
                           }
                           authProvider.clearController();
+                          if(!mounted) return;
                           locator<NavigationService>().globalNavigateTo(dashboardRoute, context);
                         },
                         child: Text(StringManager.login.toUpperCase(),
                             style: const TextStyle(
-                                color: primaryColor,
+                                color: newPrimaryColor,
                                 fontFamily: StringManager.dmSans,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700))),

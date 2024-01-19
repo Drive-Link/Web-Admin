@@ -50,6 +50,8 @@ dependencies:
   get_it: ^7.6.4
   responsive_table: ^0.2.0+2
   flutter_rating_bar: ^4.0.1
+  image_picker: ^1.0.4
+  dotted_border: ^2.1.0
 
 
 dev_dependencies:

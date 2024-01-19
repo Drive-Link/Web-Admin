@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drivelink_admin/constants/colors.dart';
 import 'package:drivelink_admin/helpers/loading.dart';
 import 'package:drivelink_admin/resources/string_manager.dart';
+import 'package:drivelink_admin/views/drivers/account_creation/register.dart';
 import 'package:flutter/material.dart';
 import '../../models/user_model.dart';
 import 'drivers_details_page.dart';
@@ -59,32 +60,42 @@ class _DriversPageState extends State<DriversPage> {
                             fontWeight: FontWeight.w700,
                             fontFamily: StringManager.dmSans),
                       ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 8),
-                        height: 60,
-                        width: 200,
-                        decoration: BoxDecoration(
-                            color: newPrimaryColor,
-                            borderRadius: BorderRadius.circular(8.0)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.add),
-                              color: Colors.white,
-                              iconSize: 25,
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const DriversRegistration()
                             ),
-                            const Text(
-                              StringManager.createDriver,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: StringManager.dmSans,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 14),
-                            )
-                          ],
+                          );
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 8),
+                          height: 60,
+                          width: 200,
+                          decoration: BoxDecoration(
+                              color: newPrimaryColor,
+                              borderRadius: BorderRadius.circular(8.0)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.add),
+                                color: Colors.white,
+                                iconSize: 25,
+                              ),
+                              const Text(
+                                StringManager.createDriver,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: StringManager.dmSans,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 14),
+                              )
+                            ],
+                          ),
                         ),
                       )
                     ],
