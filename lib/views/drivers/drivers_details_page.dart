@@ -230,6 +230,7 @@ class _DriversDetailsPageState extends State<DriversDetailsPage> {
                   children: [
                     const Text(
                       StringManager.totalAmountWithdrawn,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           color: redColor,
                           fontSize: 14,

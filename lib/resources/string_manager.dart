@@ -6,13 +6,17 @@ class StringManager {
   static const String emailAddress = "Email Address";
   static const String firstName = "First Name";
   static const String lastName = "Last Name";
+  static const String country = "Country";
+  static const String state = "State";
+  static const String city = "City";
+  static const String finish = 'Finish';
   static const String name = "Name";
   static const String sN = "S/N";
   static const String password = "Password";
   static const String login = "Login";
   static const String alreadyHave = "Already have an account?";
   static const String doNotHave = "Don't have an account?";
-  static const String register = "Register";
+  static const String register = " Register";
   static const String forgotPass = "Forgot Password";
   static const String remember = "Remember me";
   static const String dashboard = "Dashboard";
@@ -62,12 +66,33 @@ class StringManager {
   static const String identificationCard = "Identification Card";
   static const String medicalReport = "Medical Report";
   static const String accountDetails = "Account Details";
+  static const String accountDetailsInfo = "Enter your account details below";
+  static const String bank = "Bank";
+  static const String bankName = "Bank Name";
+  static const String accountNumber = "Account Number";
+  static const String accountName = "Account Name";
   static const String next = "Next";
   static const String confirmPassword = "Confirm Password";
   static const String stepTwo = "Step 2 of 2";
   static const String userActivity = "User Activity";
   static const String rating = "Rating";
   static const String previous = "Previous";
+  static const String takePictureInfo =
+      "Take a picture with your front camera and ensure it is properly lightened";
+  static const String verificationSubText =
+      "Upload the following documents to verify your driver’s account";
+  static const String idCardText =
+      "Upload the front and back images of your identification card";
+  static const String driverLicenseText =
+      "Upload the front and back images of your driver’s license";
+  static const String front = "Front";
+  static const String back = "Back";
+  static const String takePhoto = "Take Photo";
+  static const String camera = "CAMERA";
+  static const String cameraText = "Take an image with your phone camera";
+  static const String gallery = "GALLERY";
+  static const String galleryText = "Select an image from your phone";
+
 
 
 
