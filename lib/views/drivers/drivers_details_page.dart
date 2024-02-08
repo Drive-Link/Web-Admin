@@ -1,3 +1,4 @@
+import 'package:drivelink_admin/models/driver_model.dart';
 import 'package:flutter/material.dart';
 import '../../constants/colors.dart';
 import '../../helpers/custom_textfield.dart';
@@ -5,9 +6,9 @@ import '../../models/user_model.dart';
 import '../../resources/string_manager.dart';
 
 class DriversDetailsPage extends StatefulWidget {
-  const DriversDetailsPage({super.key, required this.user});
+  const DriversDetailsPage({super.key, required this.driver});
 
-  final UserModel user;
+  final DriverModel driver;
 
   @override
   State<DriversDetailsPage> createState() => _DriversDetailsPageState();
@@ -22,9 +23,9 @@ class _DriversDetailsPageState extends State<DriversDetailsPage> {
   @override
   void initState() {
     super.initState();
-    _emailAddressController.text = widget.user.emailAddress;
-    _phoneNumberController.text = widget.user.phoneNumber;
-    _locationController.text = widget.user.state;
+    _emailAddressController.text = widget.driver.emailAddress;
+    _phoneNumberController.text = widget.driver.phoneNumber;
+    _locationController.text = widget.driver.state;
   }
 
   void toggleEditMode() {
@@ -82,13 +83,13 @@ class _DriversDetailsPageState extends State<DriversDetailsPage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('${widget.user.firstName} ${widget.user.lastName}',
+                        Text('${widget.driver.firstName} ${widget.driver.lastName}',
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontFamily: StringManager.dmSans,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20)),
-                        Text('${widget.user.state}, ${widget.user.country}',
+                        Text('${widget.driver.state}, ${widget.driver.country}',
                             style: TextStyle(
                                 color: mainTextColor.withOpacity(0.9),
                                 fontFamily: StringManager.dmSans,
@@ -198,9 +199,10 @@ class _DriversDetailsPageState extends State<DriversDetailsPage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    const Text(
-                      '75,680.50',
-                      style: TextStyle(
+                    Text(
+                      //widget.user.amountEarned,
+                      '',
+                      style: const TextStyle(
                           color: Colors.black,
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
@@ -240,9 +242,10 @@ class _DriversDetailsPageState extends State<DriversDetailsPage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    const Text(
-                      '50,000.00',
-                      style: TextStyle(
+                    Text(
+                      //widget.user.amountWithdrawn,
+                      '',
+                      style: const TextStyle(
                           color: Colors.black,
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
@@ -281,9 +284,10 @@ class _DriversDetailsPageState extends State<DriversDetailsPage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    const Text(
-                      '25,680.50',
-                      style: TextStyle(
+                    Text(
+                      widget.driver.availableBalance.toString(),
+                      //'',
+                      style: const TextStyle(
                           color: Colors.black,
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -306,9 +310,9 @@ class _DriversDetailsPageState extends State<DriversDetailsPage> {
             ),
             Expanded(
                 child: SingleChildScrollView(
-                  child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   const SizedBox(
                     height: 30,
                   ),
@@ -364,9 +368,9 @@ class _DriversDetailsPageState extends State<DriversDetailsPage> {
                         ),
                       ),
                     ),
-              ],
-            ),
-                ))
+                ],
+              ),
+            ))
           ],
         ),
       ),
