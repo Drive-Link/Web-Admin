@@ -1,13 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class UserModel {
-  //static const ID = "id";
+class DriverModel {
   static const FIRSTNAME = "first_name";
   static const LASTNAME = "last_name";
   static const EMAILADDRESS = "email_address";
   static const PHONENUMBER = "phone_number";
   static const STATE = "state";
   static const COUNTRY = "country";
+  static const AMOUNTEARNED = "totalAmountEarned";
+  static const AMOUNTWITHDRAWN = "totalAmountWithdrawn";
+  static const BALANCE = "balanceAvailable";
+
   String? _id;
   String? _firstName;
   String? _emailAddress;
@@ -15,6 +18,10 @@ class UserModel {
   String? _lastName;
   String? _state;
   String? _country;
+
+  //String? _amountEarned;
+  //String? _amountWithdrawn;
+  double? _balance;
 
 //  getters
   String get firstName => _firstName!;
@@ -29,9 +36,15 @@ class UserModel {
 
   String get country => _country!;
 
+  // String get amountEarned => _amountEarned!;
+
+  // String get amountWithdrawn => _amountWithdrawn!;
+
+  double get availableBalance => _balance!;
+
   //String get id => _id!;
 
-  UserModel.fromSnapshot(DocumentSnapshot snapshot) {
+  DriverModel.fromSnapshot(DocumentSnapshot snapshot) {
     final Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     _firstName = data?[FIRSTNAME] ?? "";
     _lastName = data?[LASTNAME] ?? "";
@@ -39,6 +52,9 @@ class UserModel {
     _state = data?[STATE] ?? "";
     _emailAddress = data?[EMAILADDRESS] ?? "";
     _country = data?[COUNTRY] ?? "";
+    //_amountWithdrawn = data?[AMOUNTWITHDRAWN] ?? "";
+    //_amountEarned = data?[AMOUNTEARNED] ?? "";
+    _balance = data?[BALANCE] ?? "";
     //_id = data?[ID] ?? "";
   }
 }

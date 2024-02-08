@@ -246,6 +246,31 @@ class _VerificationDetailsPageState extends State<VerificationDetailsPage> {
                 ],
               ),
               const SizedBox(
+                height: 20,
+              ),
+              const Text(
+                StringManager.medicalReport,
+                style: TextStyle(
+                    color: newPrimaryColor,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: StringManager.dmSans),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Container(
+                height: 150,
+                width: 300,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Image.asset(
+                  'assets/images/licence_front.png',
+                  fit: BoxFit.fill,
+                ),
+              ),
+              const SizedBox(
                 height: 30,
               ),
               const Text(

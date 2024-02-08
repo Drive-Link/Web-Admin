@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drivelink_admin/constants/colors.dart';
 import 'package:drivelink_admin/helpers/loading.dart';
+import 'package:drivelink_admin/models/driver_model.dart';
 import 'package:drivelink_admin/resources/string_manager.dart';
 import 'package:drivelink_admin/views/drivers/account_creation/register.dart';
 import 'package:flutter/material.dart';
-import '../../models/user_model.dart';
+
 import 'drivers_details_page.dart';
 
 class DriversPage extends StatefulWidget {
@@ -31,15 +32,15 @@ class _DriversPageState extends State<DriversPage> {
           return const Center(child: Loading());
         }
 
-        var userModels = snapshot.data!.docs
-            .map((doc) => UserModel.fromSnapshot(doc))
+        var driverModels = snapshot.data!.docs
+            .map((doc) => DriverModel.fromSnapshot(doc))
             .toList();
 
         // Paginate the data
         int startIndex = (_currentPage - 1) * _rowsPerPage;
         int endIndex = startIndex + _rowsPerPage;
-        List<UserModel> paginatedData = userModels.sublist(
-            startIndex, endIndex.clamp(0, userModels.length));
+        List<DriverModel> paginatedData = driverModels.sublist(
+            startIndex, endIndex.clamp(0, driverModels.length));
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -61,12 +62,12 @@ class _DriversPageState extends State<DriversPage> {
                             fontFamily: StringManager.dmSans),
                       ),
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const DriversRegistration()
-                            ),
+                                builder: (context) =>
+                                    const DriversRegistration()),
                           );
                         },
                         child: Container(
@@ -142,17 +143,19 @@ class _DriversPageState extends State<DriversPage> {
                           fontWeight: FontWeight.w700),
                     )),
                   ],
-                  source: DriversTableSource(paginatedData,
-                    onRowTap: (user) {
+                  source: DriversTableSource(
+                    paginatedData,
+                    onRowTap: (driver) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => DriversDetailsPage(
-                            user: user,
+                            driver: driver,
                           ),
                         ),
                       );
-                    },),
+                    },
+                  ),
                   rowsPerPage: _rowsPerPage,
                   availableRowsPerPage: const [5, 10, 20],
                   onPageChanged: (int pageIndex) {
@@ -174,7 +177,7 @@ class _DriversPageState extends State<DriversPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                      'Showing $_currentPage-$_rowsPerPage of ${userModels.length}'),
+                      'Showing $_currentPage-$_rowsPerPage of ${driverModels.length}'),
                   Row(
                     children: [
                       if (_currentPage > 1)
@@ -220,28 +223,28 @@ class _DriversPageState extends State<DriversPage> {
 }
 
 class DriversTableSource extends DataTableSource {
-  final List<UserModel> _userModels;
-  final Function(UserModel) onRowTap;
+  final List<DriverModel> _driverModels;
+  final Function(DriverModel) onRowTap;
 
-  DriversTableSource(this._userModels, {required this.onRowTap});
+  DriversTableSource(this._driverModels, {required this.onRowTap});
 
   @override
   DataRow? getRow(int index) {
-    if (index >= _userModels.length) {
+    if (index >= _driverModels.length) {
       return null;
     }
-    final UserModel user = _userModels[index];
+    final DriverModel driver = _driverModels[index];
     return DataRow(
       cells: [
         DataCell(Text((index + 1).toString())),
         DataCell(GestureDetector(
-          onTap: (){
-            onRowTap(user);
-          },
-            child: Text('${user.firstName} ${user.lastName}'))),
-        DataCell(Text(user.emailAddress)),
-        DataCell(Text(user.phoneNumber)),
-        DataCell(Text('${user.state}, ${user.country}')),
+            onTap: () {
+              onRowTap(driver);
+            },
+            child: Text('${driver.firstName} ${driver.lastName}'))),
+        DataCell(Text(driver.emailAddress)),
+        DataCell(Text(driver.phoneNumber)),
+        DataCell(Text('${driver.state}, ${driver.country}')),
       ],
     );
   }
@@ -250,7 +253,7 @@ class DriversTableSource extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => _userModels.length;
+  int get rowCount => _driverModels.length;
 
   @override
   int get selectedRowCount => 0;
