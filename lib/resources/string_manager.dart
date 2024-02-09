@@ -35,7 +35,7 @@ class StringManager {
   static const String phoneNumber = "Phone Number";
   static const String status = "Status";
   static const String location = "Location";
-  static const String seeAll = "Sell all";
+  static const String seeAll = "See all";
   static const String search = "Search";
   static const String verify = "Verify";
   static const String decline = "Decline";
