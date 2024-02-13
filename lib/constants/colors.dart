@@ -16,4 +16,4 @@ const Color redColor = Color(0xFFF80000);
 const Color newPrimaryColor = Color(0xFF2E396D);
 const Color tealColor = Color(0xFF169D00);
 const Color wineColor = Color(0xFF830926);
-const Color orangeColor = Color(0xFF830926);
+const Color orangeColor = Color(0xFFE98C00);

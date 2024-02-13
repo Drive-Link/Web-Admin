@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drivelink_admin/constants/colors.dart';
 import 'package:drivelink_admin/resources/string_manager.dart';
 import 'package:drivelink_admin/views/components/custom_appbar.dart';
@@ -12,6 +13,52 @@ class DashboardContent extends StatefulWidget {
 }
 
 class _DashboardContentState extends State<DashboardContent> {
+  int totalDriversCount = 0;
+  int totalPassengersCount = 0;
+  int totalPendingDriversCount = 0;
+  int totalCount = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchTotalDriversCount();
+    _fetchTotalPassengersCount();
+    _fetchTotalCounts();
+  }
+
+  Future<void> _fetchTotalDriversCount() async {
+    final QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('drivers').get();
+    setState(() {
+      totalDriversCount = snapshot.size;
+    });
+  }
+
+  Future<void> _fetchTotalPassengersCount() async {
+    final QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('users').get();
+    setState(() {
+      totalPassengersCount = snapshot.size;
+    });
+  }
+
+  Future<void> _fetchTotalCounts() async {
+    final QuerySnapshot driversSnapshot =
+    await FirebaseFirestore.instance.collection('drivers').get();
+    final QuerySnapshot passengersSnapshot =
+    await FirebaseFirestore.instance.collection('users').get();
+    final QuerySnapshot pendingDriversSnapshot = await FirebaseFirestore
+        .instance
+        .collection('drivers')
+        .where('isVerified', isEqualTo: false)
+        .get();
+
+    setState(() {
+      totalDriversCount = driversSnapshot.size;
+      totalPassengersCount = passengersSnapshot.size;
+      totalPendingDriversCount = pendingDriversSnapshot.size;
+      totalCount = totalDriversCount + totalPassengersCount;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -34,28 +81,28 @@ class _DashboardContentState extends State<DashboardContent> {
                             'Total Users',
                             newPrimaryColor,
                             'assets/images/blue_faint.png',
-                            '24,568',
+                            totalCount.toString(),
                             newPrimaryColor),
                         customUserWidget(
                             'assets/images/wine.png',
                             'Pending Drivers',
                             wineColor,
                             'assets/images/wine_faint.png',
-                            '54',
+                            totalPendingDriversCount.toString(),
                             wineColor),
                         customUserWidget(
                             'assets/images/green.png',
                             'Passengers',
                             tealColor,
                             'assets/images/green_faint.png',
-                            '21,350',
+                            totalPassengersCount.toString(),
                             tealColor),
                         customUserWidget(
                             'assets/images/orange.png',
                             'Drivers',
                             orangeColor,
                             'assets/images/orange_faint.png',
-                            '3,218',
+                            totalDriversCount.toString(),
                             orangeColor),
                       ],
                     ),
@@ -334,7 +381,7 @@ class _DashboardContentState extends State<DashboardContent> {
                         color: mainTextColor,
                         fontFamily: StringManager.dmSans,
                         fontWeight: FontWeight.w400,
-                        fontSize: 16)),
+                        fontSize: 22)),
                 Container(
                   width: 100,
                   height: 5,
