@@ -107,7 +107,7 @@ class _DashboardContentState extends State<DashboardContent> {
                       ],
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -336,7 +336,7 @@ class _DashboardContentState extends State<DashboardContent> {
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(12.0)),
       width: 250,
-      height: 200,
+      height: 210,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

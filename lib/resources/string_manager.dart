@@ -44,6 +44,9 @@ class StringManager {
   static const String details = "Details";
   static const String reviews = "Reviews";
   static const String trips = "Trips";
+  static const String allTrips = "All Trips";
+  static const String completedTrips = "Completed Trips";
+  static const String cancelledTrips = "Cancelled Trips";
   static const String driversDetails = "Drivers Details";
   static const String profileDetails = "Profile Details";
   static const String sendNotifications = "Send Notifications";
