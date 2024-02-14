@@ -18,3 +18,4 @@ const Color tealColor = Color(0xFF169D00);
 const Color wineColor = Color(0xFF830926);
 const Color orangeColor = Color(0xFFE98C00);
 const Color errorColor = Color(0xFFF80000);
+const Color fadedGreen = Color(0xFFECFCF8);
