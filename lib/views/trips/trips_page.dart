@@ -30,6 +30,11 @@ class _TripsPageState extends State<TripsPage> {
     '12:43PM'
   ];
 
+  var months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December '];
+  var years = ['2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030'];
+  String dropdownValue = 'January';
+  String yearValue = '2023';
+
   int current = 0;
 
   @override
@@ -97,6 +102,88 @@ class _TripsPageState extends State<TripsPage> {
                                     fontFamily: StringManager.dmSans,
                                     fontWeight: FontWeight.w700,
                                     fontSize: 14)),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    border: Border.all(
+                                      color: mainTextColor.withOpacity(0.8),
+                                      width: 1
+                                    )
+                                  ),
+                                  height: 30,
+                                  child: Center(
+                                    child: DropdownButton(
+                                      items: months.map((String item){
+                                        return DropdownMenuItem(
+                                            value: item,
+                                            child: Text(item,
+                                                style: const TextStyle(
+                                                    color: mainTextColor,
+                                                    fontFamily: StringManager.dmSans,
+                                                    fontWeight: FontWeight.w700,
+                                                    fontSize: 14)
+                                            )
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? newValue){
+                                        setState(() {
+                                          dropdownValue = newValue!;
+                                        });
+                                      },
+                                      value: dropdownValue,
+                                      borderRadius: BorderRadius.circular(10),
+                                      icon: Icon(Icons.keyboard_arrow_down, color: mainTextColor.withOpacity(0.9)),
+                                      iconSize: 20,
+                                      underline: Container(),
+                                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 10,),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(100),
+                                      border: Border.all(
+                                          color: mainTextColor.withOpacity(0.8),
+                                          width: 1
+                                      )
+                                  ),
+                                  height: 30,
+                                  child: Center(
+                                    child: DropdownButton(
+                                      items: years.map((String item){
+                                        return DropdownMenuItem(
+                                            value: item,
+                                            child: Text(item,
+                                                style: const TextStyle(
+                                                    color: mainTextColor,
+                                                    fontFamily: StringManager.dmSans,
+                                                    fontWeight: FontWeight.w700,
+                                                    fontSize: 14)
+                                            )
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? newValue){
+                                        setState(() {
+                                          yearValue = newValue!;
+                                        });
+                                      },
+                                      value: yearValue,
+                                      borderRadius: BorderRadius.circular(10),
+                                      icon: Icon(Icons.keyboard_arrow_down, color: mainTextColor.withOpacity(0.9)),
+                                      iconSize: 20,
+                                      underline: Container(),
+                                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                             const SizedBox(
                               height: 20,
                             ),
