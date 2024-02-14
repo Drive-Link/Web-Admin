@@ -35,7 +35,7 @@ class _TripsPageState extends State<TripsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: tealColor.withOpacity(0.2),
+      backgroundColor: fadedGreen,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
