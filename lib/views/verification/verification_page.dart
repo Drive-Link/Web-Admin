@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:drivelink_admin/models/driver_model.dart';
 import 'package:drivelink_admin/views/verification/verification_details.dart';
 import 'package:flutter/material.dart';
 
@@ -28,27 +29,27 @@ class _VerificationPageState extends State<VerificationPage> {
           children: [
             Expanded(
                 child: TextField(
-              decoration: InputDecoration(
-                  hintText: "Search Drivers",
-                  helperStyle: TextStyle(
-                    color: Colors.black.withOpacity(0.5),
-                    fontSize: 15,
-                  ),
-                  fillColor: customTextFieldColor,
-                  filled: true,
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(10)),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: textColor.withOpacity(0.5),
-                  )),
-              onChanged: (value) {
-                setState(() {
-                  _searchQuery = value;
-                });
-              },
-            )),
+                  decoration: InputDecoration(
+                      hintText: "Search Drivers",
+                      helperStyle: TextStyle(
+                        color: Colors.black.withOpacity(0.5),
+                        fontSize: 15,
+                      ),
+                      fillColor: customTextFieldColor,
+                      filled: true,
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10)),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: textColor.withOpacity(0.5),
+                      )),
+                  onChanged: (value) {
+                    setState(() {
+                      _searchQuery = value;
+                    });
+                  },
+                )),
             const SizedBox(
               width: 5,
             ),
@@ -97,9 +98,9 @@ class _VerificationPageState extends State<VerificationPage> {
                     child: Text(
                       'Welcome, Mark',
                       style: TextStyle(
-                        color: Colors.black.withOpacity(0.9),
-                        fontWeight: FontWeight.w800,
-                        fontSize: 16
+                          color: Colors.black.withOpacity(0.9),
+                          fontWeight: FontWeight.w800,
+                          fontSize: 16
                       ),
                     ),
                   )
@@ -113,7 +114,7 @@ class _VerificationPageState extends State<VerificationPage> {
         decoration: const BoxDecoration(color: Color(0xFFECFCF8)),
         child: StreamBuilder<QuerySnapshot>(
             stream:
-                FirebaseFirestore.instance.collection('drivers').snapshots(),
+            FirebaseFirestore.instance.collection('drivers').snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
@@ -123,36 +124,36 @@ class _VerificationPageState extends State<VerificationPage> {
                 return const Center(child: Loading());
               }
 
-              var userModels = snapshot.data!.docs
-                  .map((doc) => UserModel.fromSnapshot(doc))
+              var driverModels = snapshot.data!.docs
+                  .map((doc) => DriverModel.fromSnapshot(doc))
                   .where((user) =>
-                      user.firstName
-                          .toLowerCase()
-                          .contains(_searchQuery.toLowerCase()) ||
-                      user.lastName
-                          .toLowerCase()
-                          .contains(_searchQuery.toLowerCase()))
+              user.firstName
+                  .toLowerCase()
+                  .contains(_searchQuery.toLowerCase()) ||
+                  user.lastName
+                      .toLowerCase()
+                      .contains(_searchQuery.toLowerCase()))
                   .toList();
 
               return Padding(
                 padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
                 child: GridView.builder(
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 5,
-                            crossAxisSpacing: 8.0,
-                            mainAxisSpacing: 8.0,
-                            childAspectRatio: 1.5),
-                    itemCount: userModels.length,
+                    const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 5,
+                        crossAxisSpacing: 8.0,
+                        mainAxisSpacing: 8.0,
+                        childAspectRatio: 1.5),
+                    itemCount: driverModels.length,
                     itemBuilder: (context, index) {
-                      final UserModel user = userModels[index];
+                      final DriverModel user = driverModels[index];
                       return GestureDetector(
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    VerificationDetailsPage(user: user)),
+                                    VerificationDetailsPage(driver: user)),
                           );
                         },
                         child: Container(
@@ -186,7 +187,7 @@ class _VerificationPageState extends State<VerificationPage> {
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                               '${user.firstName} ${user.lastName}',
@@ -194,9 +195,9 @@ class _VerificationPageState extends State<VerificationPage> {
                                               style: const TextStyle(
                                                   color: Colors.black,
                                                   fontFamily:
-                                                      StringManager.dmSans,
+                                                  StringManager.dmSans,
                                                   overflow:
-                                                      TextOverflow.ellipsis,
+                                                  TextOverflow.ellipsis,
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 14)),
                                           const SizedBox(
@@ -207,7 +208,7 @@ class _VerificationPageState extends State<VerificationPage> {
                                                   color: mainTextColor
                                                       .withOpacity(0.9),
                                                   fontFamily:
-                                                      StringManager.dmSans,
+                                                  StringManager.dmSans,
                                                   fontWeight: FontWeight.w400,
                                                   fontSize: 12)),
                                         ],

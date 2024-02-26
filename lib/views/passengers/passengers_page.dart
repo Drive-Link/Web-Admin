@@ -30,27 +30,27 @@ class _PassengersPageState extends State<PassengersPage> {
           children: [
             Expanded(
                 child: TextField(
-              decoration: InputDecoration(
-                  hintText: "Search Passengers",
-                  helperStyle: TextStyle(
-                    color: Colors.black.withOpacity(0.5),
-                    fontSize: 15,
-                  ),
-                  fillColor: customTextFieldColor,
-                  filled: true,
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(10)),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: textColor.withOpacity(0.5),
-                  )),
-              onChanged: (value) {
-                setState(() {
-                  _searchQuery = value;
-                });
-              },
-            )),
+                  decoration: InputDecoration(
+                      hintText: "Search Passengers",
+                      helperStyle: TextStyle(
+                        color: Colors.black.withOpacity(0.5),
+                        fontSize: 15,
+                      ),
+                      fillColor: customTextFieldColor,
+                      filled: true,
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10)),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: textColor.withOpacity(0.5),
+                      )),
+                  onChanged: (value) {
+                    setState(() {
+                      _searchQuery = value;
+                    });
+                  },
+                )),
             const SizedBox(
               width: 5,
             ),
@@ -124,12 +124,12 @@ class _PassengersPageState extends State<PassengersPage> {
           var userModels = snapshot.data!.docs
               .map((doc) => UserModel.fromSnapshot(doc))
               .where((user) =>
-                  user.firstName
-                      .toLowerCase()
-                      .contains(_searchQuery.toLowerCase()) ||
-                  user.lastName
-                      .toLowerCase()
-                      .contains(_searchQuery.toLowerCase()))
+          user.firstName
+              .toLowerCase()
+              .contains(_searchQuery.toLowerCase()) ||
+              user.lastName
+                  .toLowerCase()
+                  .contains(_searchQuery.toLowerCase()))
               .toList();
 
           // Paginate the data
@@ -157,44 +157,44 @@ class _PassengersPageState extends State<PassengersPage> {
                     columns: const [
                       DataColumn(
                           label: Text(
-                        StringManager.sN,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700),
-                      )),
+                            StringManager.sN,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700),
+                          )),
                       DataColumn(
                           label: Text(
-                        StringManager.name,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700),
-                      )),
+                            StringManager.name,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700),
+                          )),
                       DataColumn(
                           label: Text(
-                        StringManager.emailAddress,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700),
-                      )),
+                            StringManager.emailAddress,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700),
+                          )),
                       DataColumn(
                           label: Text(
-                        StringManager.phoneNumber,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700),
-                      )),
+                            StringManager.phoneNumber,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700),
+                          )),
                       DataColumn(
                           label: Text(
-                        StringManager.location,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700),
-                      )),
+                            StringManager.location,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700),
+                          )),
                     ],
                     source: PassengersTableSource(
                       paginatedData,

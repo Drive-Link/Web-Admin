@@ -1,13 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:drivelink_admin/models/driver_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/colors.dart';
-import '../../models/user_model.dart';
 import '../../resources/string_manager.dart';
 
 class VerificationDetailsPage extends StatefulWidget {
-  const VerificationDetailsPage({super.key, required this.user});
+  const VerificationDetailsPage({super.key, required this.driver});
 
-  final UserModel user;
+  final DriverModel driver;
 
   @override
   State<VerificationDetailsPage> createState() =>
@@ -15,6 +16,41 @@ class VerificationDetailsPage extends StatefulWidget {
 }
 
 class _VerificationDetailsPageState extends State<VerificationDetailsPage> {
+  bool _isVerified = false;
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection('drivers')
+        .doc(widget.driver.id)
+        .get()
+        .then((snapshot) {
+      if (snapshot.exists) {
+        setState(() {
+          _isVerified = snapshot.data()?['isVerified'] ?? false;
+        });
+      }
+    }).catchError((error) {
+      print("Failed to get driver details: $error");
+    });
+  }
+
+  void _verifyDriver() {
+    FirebaseFirestore.instance
+        .collection('drivers')
+        .doc(widget.driver.id)
+        .update({
+      'isVerified': true,
+    }).then((_) {
+      setState(() {
+        _isVerified = true;
+      });
+    }).catchError((error) {
+      print("Failed to update driver: $error");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,13 +99,14 @@ class _VerificationDetailsPageState extends State<VerificationDetailsPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                              '${widget.user.firstName} ${widget.user.lastName}',
+                              '${widget.driver.firstName} ${widget.driver.lastName}',
                               style: const TextStyle(
                                   color: Colors.black,
                                   fontFamily: StringManager.dmSans,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20)),
-                          Text('${widget.user.state}, ${widget.user.country}',
+                          Text(
+                              '${widget.driver.state}, ${widget.driver.country}',
                               style: TextStyle(
                                   color: mainTextColor.withOpacity(0.9),
                                   fontFamily: StringManager.dmSans,
@@ -85,28 +122,36 @@ class _VerificationDetailsPageState extends State<VerificationDetailsPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              if (!_isVerified) {
+                                _verifyDriver();
+                              }
+                            },
                             child: Container(
                               height: 50,
                               width: 50,
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: tealColor.withOpacity(0.2)),
+                                  color: _isVerified
+                                      ? Colors.blue
+                                      : tealColor.withOpacity(0.2)),
                               child: Center(
                                 child: Padding(
                                   padding: const EdgeInsets.all(12.0),
                                   child: Icon(
                                     Icons.check,
-                                    color: tealColor.withOpacity(0.5),
+                                    color: _isVerified
+                                        ? Colors.white
+                                        : tealColor.withOpacity(0.5),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          const Text(
-                            StringManager.verify,
+                          Text(
+                            _isVerified ? 'Verified' : 'Verify',
                             style: TextStyle(
-                                color: Colors.green,
+                                color: _isVerified ? Colors.blue : Colors.green,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: StringManager.dmSans),
@@ -284,10 +329,10 @@ class _VerificationDetailsPageState extends State<VerificationDetailsPage> {
               const SizedBox(
                 height: 30,
               ),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     StringManager.bankName,
                     style: TextStyle(
                         color: Colors.black,
@@ -295,12 +340,12 @@ class _VerificationDetailsPageState extends State<VerificationDetailsPage> {
                         fontWeight: FontWeight.w500,
                         fontFamily: StringManager.dmSans),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 70,
                   ),
                   Text(
-                    'Access Bank',
-                    style: TextStyle(
+                    widget.driver.bankName,
+                    style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -311,10 +356,10 @@ class _VerificationDetailsPageState extends State<VerificationDetailsPage> {
               const SizedBox(
                 height: 30,
               ),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     StringManager.accountNumber,
                     style: TextStyle(
                         color: Colors.black,
@@ -322,12 +367,12 @@ class _VerificationDetailsPageState extends State<VerificationDetailsPage> {
                         fontWeight: FontWeight.w500,
                         fontFamily: StringManager.dmSans),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 70,
                   ),
                   Text(
-                    '12345678900',
-                    style: TextStyle(
+                    widget.driver.accountNumber,
+                    style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -353,7 +398,7 @@ class _VerificationDetailsPageState extends State<VerificationDetailsPage> {
                     width: 70,
                   ),
                   Text(
-                    '${widget.user.firstName} ${widget.user.lastName}',
+                    '${widget.driver.firstName} ${widget.driver.lastName}',
                     style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16,

@@ -35,7 +35,7 @@ class AuthProvider with ChangeNotifier {
 
   _fireSetUp() async {
     await initialization.then((value) {
-     // auth.authStateChanges().listen(_onStateChanged);
+      // auth.authStateChanges().listen(_onStateChanged);
     });
   }
 

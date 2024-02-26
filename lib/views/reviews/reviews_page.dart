@@ -59,52 +59,52 @@ class _ReviewsPageState extends State<ReviewsPage> {
                   columns: const [
                     DataColumn(
                         label: Text(
-                      StringManager.sN,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700),
-                    )),
+                          StringManager.sN,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700),
+                        )),
                     DataColumn(
                         label: Text(
-                      StringManager.name,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700),
-                    )),
+                          StringManager.name,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700),
+                        )),
                     DataColumn(
                         label: Text(
-                      StringManager.emailAddress,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700),
-                    )),
+                          StringManager.emailAddress,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700),
+                        )),
                     DataColumn(
                         label: Text(
-                      StringManager.phoneNumber,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700),
-                    )),
+                          StringManager.phoneNumber,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700),
+                        )),
                     DataColumn(
                         label: Text(
-                      StringManager.location,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700),
-                    )),
+                          StringManager.location,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700),
+                        )),
                     DataColumn(
                         label: Text(
-                      StringManager.rating,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700),
-                    )),
+                          StringManager.rating,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700),
+                        )),
                   ],
                   source: ReviewsTableSource(paginatedData),
                   rowsPerPage: _rowsPerPage,

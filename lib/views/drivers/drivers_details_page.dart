@@ -200,8 +200,7 @@ class _DriversDetailsPageState extends State<DriversDetailsPage> {
                       height: 10,
                     ),
                     Text(
-                      //widget.user.amountEarned,
-                      '',
+                      widget.driver.amountEarned.toString(),
                       style: const TextStyle(
                           color: Colors.black,
                           fontSize: 25,
@@ -243,8 +242,7 @@ class _DriversDetailsPageState extends State<DriversDetailsPage> {
                       height: 10,
                     ),
                     Text(
-                      //widget.user.amountWithdrawn,
-                      '',
+                      widget.driver.amountWithdrawn.toString(),
                       style: const TextStyle(
                           color: Colors.black,
                           fontSize: 25,
