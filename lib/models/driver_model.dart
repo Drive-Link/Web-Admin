@@ -11,6 +11,11 @@ class DriverModel {
   static const AMOUNTWITHDRAWN = "totalAmountWithdrawn";
   static const BALANCE = "balanceAvailable";
   static const VERIFIED = "isVerified";
+  static const DRIVER_LICENSE = "driver_license";
+  static const ACCOUNT_NUMBER = "account_number";
+  static const BANK_NAME = "bank_name";
+  static const DRIVER_ID = "driverId";
+
 
   String? _id;
   String? _firstName;
@@ -20,9 +25,11 @@ class DriverModel {
   String? _state;
   String? _country;
   bool? _isVerified;
-
-  //String? _amountEarned;
-  //String? _amountWithdrawn;
+  String? _accountNumber;
+  String? _bankName;
+  List<String>? _driverLicense;
+  double? _amountEarned;
+  double? _amountWithdrawn;
   double? _balance;
 
 //  getters
@@ -38,15 +45,23 @@ class DriverModel {
 
   String get country => _country!;
 
+  String get accountNumber => _accountNumber!;
+
+  String get bankName => _bankName!;
+
   bool get verificationStatus => _isVerified!;
 
-  // String get amountEarned => _amountEarned!;
+  double get amountEarned => _amountEarned!;
 
-  // String get amountWithdrawn => _amountWithdrawn!;
+  double  get amountWithdrawn => _amountWithdrawn!;
 
   double get availableBalance => _balance!;
 
-  //String get id => _id!;
+  String? get driverLicenseFront => _driverLicense != null && _driverLicense!.isNotEmpty ? _driverLicense![0] : null;
+
+  String? get driverLicenseBack => _driverLicense != null && _driverLicense!.length > 1 ? _driverLicense![1] : null;
+
+  String get id => _id!;
 
   DriverModel.fromSnapshot(DocumentSnapshot snapshot) {
     final Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
@@ -55,11 +70,14 @@ class DriverModel {
     _phoneNumber = data?[PHONENUMBER] ?? "";
     _state = data?[STATE] ?? "";
     _emailAddress = data?[EMAILADDRESS] ?? "";
+    _accountNumber = data?[ACCOUNT_NUMBER] ?? "";
+    _bankName = data?[BANK_NAME] ?? "";
     _country = data?[COUNTRY] ?? "";
     _isVerified = data?[VERIFIED] == false;
-    //_amountWithdrawn = data?[AMOUNTWITHDRAWN] ?? "";
-    //_amountEarned = data?[AMOUNTEARNED] ?? "";
+    _driverLicense = List<String>.from(data?[DRIVER_LICENSE] ?? []);
+    _amountWithdrawn = data?[AMOUNTWITHDRAWN] ?? "";
+    _amountEarned = data?[AMOUNTEARNED] ?? "";
     _balance = data?[BALANCE] ?? "";
-    //_id = data?[ID] ?? "";
+    _id = data?[DRIVER_ID] ?? "";
   }
 }
