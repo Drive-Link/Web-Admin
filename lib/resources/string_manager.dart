@@ -95,6 +95,8 @@ class StringManager {
   static const String cameraText = "Take an image with your phone camera";
   static const String gallery = "GALLERY";
   static const String galleryText = "Select an image from your phone";
+  static const String transactions = "Transactions";
+  static const String totalIncome = "Total Income";
 
 
 
