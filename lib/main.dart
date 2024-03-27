@@ -21,7 +21,7 @@ void main() async {
             appId: "1:572226846941:web:64f2af745d37239013db34",
             messagingSenderId: "572226846941",
             projectId: "drivelinkapp-f32cd",
-            storageBucket: "rivelinkapp-f32cd.appspot.com"));
+            storageBucket: "drivelinkapp-f32cd.appspot.com"));
   } else {
     await Firebase.initializeApp();
   }
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Drivelink Admin Dashboard',
+      title: 'Admin Dashboard',
       debugShowCheckedModeBanner: false,
       onGenerateRoute: generateRoute,
       initialRoute: pageControllerRoute,
