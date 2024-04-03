@@ -6,6 +6,9 @@ import 'package:drivelink_admin/views/drivers/drivers_page.dart';
 import 'package:drivelink_admin/views/passengers/passengers_details.dart';
 import 'package:drivelink_admin/views/passengers/passengers_page.dart';
 import 'package:drivelink_admin/views/reviews/reviews_page.dart';
+import 'package:drivelink_admin/views/transactions/tabs/drivers.dart';
+import 'package:drivelink_admin/views/transactions/tabs/users.dart';
+import 'package:drivelink_admin/views/transactions/transactions.dart';
 import 'package:drivelink_admin/views/trips/trips_page.dart';
 import 'package:drivelink_admin/views/verification/verification_page.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +31,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(const VerificationPage());
     case reviewsRoute:
       return _getPageRoute(const ReviewsPage());
+    case transactionsRoute:
+      return _getPageRoute(const TransactionsPage());
     case pageControllerRoute:
       return _getPageRoute(const AppPagesController());
     case loginRoute:
