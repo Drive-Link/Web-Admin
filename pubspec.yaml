@@ -39,10 +39,10 @@ dependencies:
   data_table_2: ^2.5.8
   responsive_builder: ^0.7.0
   google_fonts: ^6.1.0
-  firebase_core: ^2.24.0
-  firebase_auth: ^4.15.0
+  firebase_core: ^2.28.0
+  firebase_auth: ^4.19.0
   firebase_crashlytics: ^3.4.6
-  cloud_firestore: ^4.13.6
+  cloud_firestore: ^4.16.0
   shared_preferences: ^2.2.2
   provider: ^6.1.1
   loading_animation_widget: ^1.2.0+4
