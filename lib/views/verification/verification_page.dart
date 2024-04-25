@@ -29,27 +29,27 @@ class _VerificationPageState extends State<VerificationPage> {
           children: [
             Expanded(
                 child: TextField(
-                  decoration: InputDecoration(
-                      hintText: "Search Drivers",
-                      helperStyle: TextStyle(
-                        color: Colors.black.withOpacity(0.5),
-                        fontSize: 15,
-                      ),
-                      fillColor: customTextFieldColor,
-                      filled: true,
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(10)),
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: textColor.withOpacity(0.5),
-                      )),
-                  onChanged: (value) {
-                    setState(() {
-                      _searchQuery = value;
-                    });
-                  },
-                )),
+              decoration: InputDecoration(
+                  hintText: "Search Drivers",
+                  helperStyle: TextStyle(
+                    color: Colors.black.withOpacity(0.5),
+                    fontSize: 15,
+                  ),
+                  fillColor: customTextFieldColor,
+                  filled: true,
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10)),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: textColor.withOpacity(0.5),
+                  )),
+              onChanged: (value) {
+                setState(() {
+                  _searchQuery = value;
+                });
+              },
+            )),
             const SizedBox(
               width: 5,
             ),
@@ -100,8 +100,7 @@ class _VerificationPageState extends State<VerificationPage> {
                       style: TextStyle(
                           color: Colors.black.withOpacity(0.9),
                           fontWeight: FontWeight.w800,
-                          fontSize: 16
-                      ),
+                          fontSize: 16),
                     ),
                   )
                 ],
@@ -114,7 +113,7 @@ class _VerificationPageState extends State<VerificationPage> {
         decoration: const BoxDecoration(color: Color(0xFFECFCF8)),
         child: StreamBuilder<QuerySnapshot>(
             stream:
-            FirebaseFirestore.instance.collection('drivers').snapshots(),
+                FirebaseFirestore.instance.collection('drivers').snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
@@ -127,23 +126,23 @@ class _VerificationPageState extends State<VerificationPage> {
               var driverModels = snapshot.data!.docs
                   .map((doc) => DriverModel.fromSnapshot(doc))
                   .where((user) =>
-              user.firstName
-                  .toLowerCase()
-                  .contains(_searchQuery.toLowerCase()) ||
-                  user.lastName
-                      .toLowerCase()
-                      .contains(_searchQuery.toLowerCase()))
+                      user.firstName
+                          .toLowerCase()
+                          .contains(_searchQuery.toLowerCase()) ||
+                      user.lastName
+                          .toLowerCase()
+                          .contains(_searchQuery.toLowerCase()))
                   .toList();
 
               return Padding(
                 padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
                 child: GridView.builder(
                     gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 5,
-                        crossAxisSpacing: 8.0,
-                        mainAxisSpacing: 8.0,
-                        childAspectRatio: 1.5),
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 5,
+                            crossAxisSpacing: 8.0,
+                            mainAxisSpacing: 8.0,
+                            childAspectRatio: 1.5),
                     itemCount: driverModels.length,
                     itemBuilder: (context, index) {
                       final DriverModel user = driverModels[index];
@@ -170,16 +169,19 @@ class _VerificationPageState extends State<VerificationPage> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      height: 50,
-                                      width: 50,
-                                      decoration: const BoxDecoration(
-                                          shape: BoxShape.circle),
-                                      child: Image.asset(
-                                        'assets/images/dummy_image.png',
-                                        height: 50,
-                                        width: 50,
-                                      ),
+                                    CircleAvatar(
+                                      radius: 25,
+                                      child: user.profilePicture != null
+                                          ? Image.network(
+                                              user.profilePicture!,
+                                              height: 25,
+                                              width: 25,
+                                            )
+                                          : Image.asset(
+                                              'assets/images/dummy_image.png',
+                                              height: 25,
+                                              width: 25,
+                                            ),
                                     ),
                                     const SizedBox(
                                       width: 10,
@@ -187,7 +189,7 @@ class _VerificationPageState extends State<VerificationPage> {
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                               '${user.firstName} ${user.lastName}',
@@ -195,9 +197,9 @@ class _VerificationPageState extends State<VerificationPage> {
                                               style: const TextStyle(
                                                   color: Colors.black,
                                                   fontFamily:
-                                                  StringManager.dmSans,
+                                                      StringManager.dmSans,
                                                   overflow:
-                                                  TextOverflow.ellipsis,
+                                                      TextOverflow.ellipsis,
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 14)),
                                           const SizedBox(
@@ -208,7 +210,7 @@ class _VerificationPageState extends State<VerificationPage> {
                                                   color: mainTextColor
                                                       .withOpacity(0.9),
                                                   fontFamily:
-                                                  StringManager.dmSans,
+                                                      StringManager.dmSans,
                                                   fontWeight: FontWeight.w400,
                                                   fontSize: 12)),
                                         ],

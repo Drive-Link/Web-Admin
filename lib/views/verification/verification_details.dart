@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drivelink_admin/models/driver_model.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
 
 import '../../constants/colors.dart';
 import '../../resources/string_manager.dart';
@@ -17,10 +19,45 @@ class VerificationDetailsPage extends StatefulWidget {
 
 class _VerificationDetailsPageState extends State<VerificationDetailsPage> {
   bool _isVerified = false;
+  String? _downloadUrl;
+  String? _driverLicenseFrontUrl;
+  String? _driverLicenseBackUrl;
+  String? _identificationCardFrontUrl;
+  String? _identificationCardBackUrl;
 
   @override
   void initState() {
     super.initState();
+    getDownloadURL(widget.driver.driverLicenseFront).then((url) {
+      setState(() {
+        _driverLicenseFrontUrl = url;
+      });
+    }).catchError((error) {
+      print("Error getting download URL: $error");
+    });
+    getDownloadURL(widget.driver.driverLicenseBack).then((url) {
+      setState(() {
+        _driverLicenseBackUrl = url;
+      });
+    }).catchError((error) {
+      print("Error getting driver license back URL: $error");
+    });
+    getDownloadURL(widget.driver.identificationCardFront).then((url) {
+      setState(() {
+        _identificationCardFrontUrl = url;
+      });
+    }).catchError((error) {
+      print("Error getting identification card front URL: $error");
+    });
+
+    getDownloadURL(widget.driver.identificationCardBack).then((url) {
+      setState(() {
+        _identificationCardBackUrl = url;
+      });
+    }).catchError((error) {
+      print("Error getting identification card back URL: $error");
+    });
+
     FirebaseFirestore.instance
         .collection('drivers')
         .doc(widget.driver.id)
@@ -49,6 +86,14 @@ class _VerificationDetailsPageState extends State<VerificationDetailsPage> {
     }).catchError((error) {
       print("Failed to update driver: $error");
     });
+  }
+
+  Future<String> getDownloadURL(String? imagePath) async {
+    if (imagePath == null) {
+      return Future.error("Image path is null");
+    }
+    final ref = FirebaseStorage.instance.ref(imagePath);
+    return await ref.getDownloadURL();
   }
 
   @override
@@ -85,12 +130,18 @@ class _VerificationDetailsPageState extends State<VerificationDetailsPage> {
                   Row(
                     children: [
                       CircleAvatar(
-                        radius: 30,
-                        child: Image.asset(
-                          'assets/images/dummy_image.png',
-                          height: 65,
-                          width: 65,
-                        ),
+                        radius: 50,
+                        child: widget.driver.profilePicture != null
+                            ? Image.network(
+                                widget.driver.profilePicture!,
+                                height: 65,
+                                width: 65,
+                              )
+                            : Image.asset(
+                                'assets/images/dummy_image.png',
+                                height: 65,
+                                width: 65,
+                              ),
                       ),
                       const SizedBox(
                         width: 10,
@@ -222,13 +273,42 @@ class _VerificationDetailsPageState extends State<VerificationDetailsPage> {
                   Container(
                     height: 150,
                     width: 300,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Image.asset(
-                      'assets/images/licence_front.png',
-                      fit: BoxFit.fill,
-                    ),
+                    child: _driverLicenseFrontUrl != null
+                        ? GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PhotoView(
+                                    imageProvider:
+                                        NetworkImage(_driverLicenseFrontUrl!),
+                                  ),
+                                ),
+                              );
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: Image.network(
+                                _driverLicenseFrontUrl!,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
+                        : Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              border: Border.all(color: primaryColor, width: 1),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Driver license not submitted',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ),
                   ),
                   const SizedBox(
                     width: 10,
@@ -236,13 +316,42 @@ class _VerificationDetailsPageState extends State<VerificationDetailsPage> {
                   Container(
                     height: 150,
                     width: 300,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Image.asset(
-                      'assets/images/licence_back.png',
-                      fit: BoxFit.fill,
-                    ),
+                    child: _driverLicenseBackUrl != null
+                        ? GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PhotoView(
+                                    imageProvider:
+                                        NetworkImage(_driverLicenseBackUrl!),
+                                  ),
+                                ),
+                              );
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: Image.network(
+                                _driverLicenseBackUrl!,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
+                        : Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              border: Border.all(color: primaryColor, width: 1),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Driver license not submitted',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ),
                   ),
                 ],
               ),
@@ -266,13 +375,42 @@ class _VerificationDetailsPageState extends State<VerificationDetailsPage> {
                   Container(
                     height: 150,
                     width: 300,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Image.asset(
-                      'assets/images/licence_front.png',
-                      fit: BoxFit.fill,
-                    ),
+                    child: _identificationCardFrontUrl != null
+                        ? GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PhotoView(
+                                    imageProvider: NetworkImage(
+                                        _identificationCardFrontUrl!),
+                                  ),
+                                ),
+                              );
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: Image.network(
+                                _identificationCardFrontUrl!,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
+                        : Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              border: Border.all(color: primaryColor, width: 1),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Identification Card not submitted',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ),
                   ),
                   const SizedBox(
                     width: 10,
@@ -280,13 +418,42 @@ class _VerificationDetailsPageState extends State<VerificationDetailsPage> {
                   Container(
                     height: 150,
                     width: 300,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Image.asset(
-                      'assets/images/licence_back.png',
-                      fit: BoxFit.fill,
-                    ),
+                    child: _identificationCardBackUrl != null
+                        ? GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PhotoView(
+                                    imageProvider: NetworkImage(
+                                        _identificationCardBackUrl!),
+                                  ),
+                                ),
+                              );
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: Image.network(
+                                _identificationCardBackUrl!,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
+                        : Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              border: Border.all(color: primaryColor, width: 1),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Identification card not submitted',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ),
                   ),
                 ],
               ),
@@ -307,13 +474,42 @@ class _VerificationDetailsPageState extends State<VerificationDetailsPage> {
               Container(
                 height: 150,
                 width: 300,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Image.asset(
-                  'assets/images/licence_front.png',
-                  fit: BoxFit.fill,
-                ),
+                child: widget.driver.medicalReport != null
+                    ? GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PhotoView(
+                                imageProvider:
+                                    NetworkImage(widget.driver.medicalReport!),
+                              ),
+                            ),
+                          );
+                        },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: Image.network(
+                            widget.driver.medicalReport!,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          border: Border.all(color: primaryColor, width: 1),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'Medical Report not submitted',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
               ),
               const SizedBox(
                 height: 30,
