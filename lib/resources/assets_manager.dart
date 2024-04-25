@@ -22,6 +22,6 @@ class AssetManager {
   static const String emailSvg = "$svgPath/email.svg";
   static const String tripsSvg = "$svgPath/trips.svg";
   static const String reviewsSvg = "$svgPath/reviews.svg";
-
+  static const String transactionsSvg = "$svgPath/transactions.svg";
 
 }

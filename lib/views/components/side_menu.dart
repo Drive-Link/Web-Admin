@@ -83,6 +83,15 @@ class SideMenu extends StatelessWidget {
                   locator<NavigationService>().navigateTo(reviewsRoute);
                 },
               ),
+              DrawerListTile(
+                title: StringManager.transactions,
+                imageSrc: AssetManager.transactionsSvg,
+                active: appProvider.currentPage == DisplayedPage.TRASACTIONS,
+                press: () {
+                  appProvider.changeCurrentPage(DisplayedPage.TRASACTIONS);
+                  locator<NavigationService>().navigateTo(transactionsRoute);
+                },
+              ),
             ],
           ),
           const Spacer(),
@@ -148,13 +157,13 @@ class DrawerListTile extends StatelessWidget {
       horizontalTitleGap: 0.0,
       leading: SvgPicture.asset(
         imageSrc,
-        color: textColor,
+        color: active ? Colors.white : textColor,
         height: 16,
         width: 16,
       ),
       title: Text(
         title,
-        style: const TextStyle(color: textColor),
+        style: TextStyle(color: active ? Colors.white : textColor),
       ),
     );
   }

@@ -21,6 +21,7 @@ class StringManager {
   static const String remember = "Remember me";
   static const String dashboard = "Dashboard";
   static const String drivers = "Drivers";
+  static const String users = "Users";
   static const String allDrivers = "All Drivers";
   static const String passengers = "Passengers";
   static const String passengersDetails = "Passengers Details";
@@ -30,6 +31,7 @@ class StringManager {
   static const String settings = "Settings";
   static const String logout = "Logout";
   static const String usersActivity = "Users Activity";
+  static const String totalDriversWithdrawals = 'Total Drivers Withdrawals';
   static const String topDrivers = "Top Drivers";
   static const String riders = "Riders";
   static const String phoneNumber = "Phone Number";
@@ -97,6 +99,11 @@ class StringManager {
   static const String galleryText = "Select an image from your phone";
   static const String transactions = "Transactions";
   static const String totalIncome = "Total Income";
+  static const String totalAmount = "Total Amount";
+  static const String withdrawals = "Withdrawals";
+  static const String date = "Date";
+  static const String weeklyWithdrawals = "Weekly Withdrawals";
+  static const String allUsers = "All Users";
 
 
 
