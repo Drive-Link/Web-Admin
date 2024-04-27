@@ -104,9 +104,5 @@ class StringManager {
   static const String date = "Date";
   static const String weeklyWithdrawals = "Weekly Withdrawals";
   static const String allUsers = "All Users";
-
-
-
-
-
+  static const String kindly = "Kindly fill in the following fields to send a notification to the users";
 }

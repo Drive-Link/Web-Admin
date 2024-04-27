@@ -164,7 +164,7 @@ class _VerificationPageState extends State<VerificationPage> {
                             child: Column(
                               children: [
                                 const SizedBox(
-                                  height: 15,
+                                  height: 10,
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,

@@ -40,11 +40,12 @@ class _ReviewsPageState extends State<ReviewsPage> {
         List<UserModel> paginatedData = userModels.sublist(
             startIndex, endIndex.clamp(0, userModels.length));
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: Padding(
+        return SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: PaginatedDataTable(
                   horizontalMargin: 12,
@@ -121,52 +122,52 @@ class _ReviewsPageState extends State<ReviewsPage> {
                   },
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                      'Showing $_currentPage-$_rowsPerPage of ${userModels.length}'),
-                  Row(
-                    children: [
-                      if (_currentPage > 1)
-                        TextButton(
-                          onPressed: () {
-                            setState(() {
-                              _currentPage--;
-                            });
-                          },
-                          child: const Text(
-                            StringManager.previous,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700),
-                          ),
-                        ),
-                      if (paginatedData.length == _rowsPerPage)
-                        TextButton(
-                          onPressed: () {
-                            setState(() {
-                              _currentPage++;
-                            });
-                          },
-                          child: const Text(
-                            StringManager.next,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700),
-                          ),
-                        ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Text(
+              //           'Showing $_currentPage-$_rowsPerPage of ${userModels.length}'),
+              //       Row(
+              //         children: [
+              //           if (_currentPage > 1)
+              //             TextButton(
+              //               onPressed: () {
+              //                 setState(() {
+              //                   _currentPage--;
+              //                 });
+              //               },
+              //               child: const Text(
+              //                 StringManager.previous,
+              //                 style: TextStyle(
+              //                     color: Colors.black,
+              //                     fontSize: 16,
+              //                     fontWeight: FontWeight.w700),
+              //               ),
+              //             ),
+              //           if (paginatedData.length == _rowsPerPage)
+              //             TextButton(
+              //               onPressed: () {
+              //                 setState(() {
+              //                   _currentPage++;
+              //                 });
+              //               },
+              //               child: const Text(
+              //                 StringManager.next,
+              //                 style: TextStyle(
+              //                     color: Colors.black,
+              //                     fontSize: 16,
+              //                     fontWeight: FontWeight.w700),
+              //               ),
+              //             ),
+              //         ],
+              //       ),
+              //     ],
+              //   ),
+              // ),
+            ],
+          ),
         );
       },
     );
