@@ -42,131 +42,135 @@ class _ReviewsPageState extends State<ReviewsPage> {
 
         return SizedBox(
           height: MediaQuery.of(context).size.height,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: PaginatedDataTable(
-                  horizontalMargin: 12,
-                  header: const Text(
-                    StringManager.allDrivers,
-                    style: TextStyle(
-                        color: newPrimaryColor,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: StringManager.dmSans),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SingleChildScrollView(
+                    child: PaginatedDataTable(
+                      horizontalMargin: 12,
+                      header: const Text(
+                        StringManager.allDrivers,
+                        style: TextStyle(
+                            color: newPrimaryColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: StringManager.dmSans),
+                      ),
+                      columns: const [
+                        DataColumn(
+                            label: Text(
+                              StringManager.sN,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700),
+                            )),
+                        DataColumn(
+                            label: Text(
+                              StringManager.name,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700),
+                            )),
+                        DataColumn(
+                            label: Text(
+                              StringManager.emailAddress,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700),
+                            )),
+                        DataColumn(
+                            label: Text(
+                              StringManager.phoneNumber,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700),
+                            )),
+                        DataColumn(
+                            label: Text(
+                              StringManager.location,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700),
+                            )),
+                        DataColumn(
+                            label: Text(
+                              StringManager.rating,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700),
+                            )),
+                      ],
+                      source: ReviewsTableSource(paginatedData),
+                      rowsPerPage: _rowsPerPage,
+                      availableRowsPerPage: const [5, 10, 20],
+                      onPageChanged: (int pageIndex) {
+                        setState(() {
+                          _currentPage = pageIndex + 1;
+                        });
+                      },
+                      onRowsPerPageChanged: (int? selectedRowsPerPage) {
+                        setState(() {
+                          _rowsPerPage = selectedRowsPerPage!;
+                        });
+                      },
+                    ),
                   ),
-                  columns: const [
-                    DataColumn(
-                        label: Text(
-                          StringManager.sN,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700),
-                        )),
-                    DataColumn(
-                        label: Text(
-                          StringManager.name,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700),
-                        )),
-                    DataColumn(
-                        label: Text(
-                          StringManager.emailAddress,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700),
-                        )),
-                    DataColumn(
-                        label: Text(
-                          StringManager.phoneNumber,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700),
-                        )),
-                    DataColumn(
-                        label: Text(
-                          StringManager.location,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700),
-                        )),
-                    DataColumn(
-                        label: Text(
-                          StringManager.rating,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700),
-                        )),
-                  ],
-                  source: ReviewsTableSource(paginatedData),
-                  rowsPerPage: _rowsPerPage,
-                  availableRowsPerPage: const [5, 10, 20],
-                  onPageChanged: (int pageIndex) {
-                    setState(() {
-                      _currentPage = pageIndex + 1;
-                    });
-                  },
-                  onRowsPerPageChanged: (int? selectedRowsPerPage) {
-                    setState(() {
-                      _rowsPerPage = selectedRowsPerPage!;
-                    });
-                  },
                 ),
-              ),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       Text(
-              //           'Showing $_currentPage-$_rowsPerPage of ${userModels.length}'),
-              //       Row(
-              //         children: [
-              //           if (_currentPage > 1)
-              //             TextButton(
-              //               onPressed: () {
-              //                 setState(() {
-              //                   _currentPage--;
-              //                 });
-              //               },
-              //               child: const Text(
-              //                 StringManager.previous,
-              //                 style: TextStyle(
-              //                     color: Colors.black,
-              //                     fontSize: 16,
-              //                     fontWeight: FontWeight.w700),
-              //               ),
-              //             ),
-              //           if (paginatedData.length == _rowsPerPage)
-              //             TextButton(
-              //               onPressed: () {
-              //                 setState(() {
-              //                   _currentPage++;
-              //                 });
-              //               },
-              //               child: const Text(
-              //                 StringManager.next,
-              //                 style: TextStyle(
-              //                     color: Colors.black,
-              //                     fontSize: 16,
-              //                     fontWeight: FontWeight.w700),
-              //               ),
-              //             ),
-              //         ],
-              //       ),
-              //     ],
-              //   ),
-              // ),
-            ],
+                // Padding(
+                //   padding: const EdgeInsets.all(8.0),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Text(
+                //           'Showing $_currentPage-$_rowsPerPage of ${userModels.length}'),
+                //       Row(
+                //         children: [
+                //           if (_currentPage > 1)
+                //             TextButton(
+                //               onPressed: () {
+                //                 setState(() {
+                //                   _currentPage--;
+                //                 });
+                //               },
+                //               child: const Text(
+                //                 StringManager.previous,
+                //                 style: TextStyle(
+                //                     color: Colors.black,
+                //                     fontSize: 16,
+                //                     fontWeight: FontWeight.w700),
+                //               ),
+                //             ),
+                //           if (paginatedData.length == _rowsPerPage)
+                //             TextButton(
+                //               onPressed: () {
+                //                 setState(() {
+                //                   _currentPage++;
+                //                 });
+                //               },
+                //               child: const Text(
+                //                 StringManager.next,
+                //                 style: TextStyle(
+                //                     color: Colors.black,
+                //                     fontSize: 16,
+                //                     fontWeight: FontWeight.w700),
+                //               ),
+                //             ),
+                //         ],
+                //       ),
+                //     ],
+                //   ),
+                // ),
+              ],
+            ),
           ),
         );
       },

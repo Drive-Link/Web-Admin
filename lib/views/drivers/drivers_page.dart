@@ -145,134 +145,136 @@ class _DriversPageState extends State<DriversPage> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: PaginatedDataTable(
-                    horizontalMargin: 12,
-                    header: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          StringManager.drivers,
-                          style: TextStyle(
-                              color: newPrimaryColor,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: StringManager.dmSans),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const DriversRegistration()),
-                            );
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 8),
-                            height: 60,
-                            width: 200,
-                            decoration: BoxDecoration(
+                  child: SingleChildScrollView(
+                    child: PaginatedDataTable(
+                      horizontalMargin: 12,
+                      header: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            StringManager.drivers,
+                            style: TextStyle(
                                 color: newPrimaryColor,
-                                borderRadius: BorderRadius.circular(8.0)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.add),
-                                  color: Colors.white,
-                                  iconSize: 25,
-                                ),
-                                const Text(
-                                  StringManager.createDriver,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: StringManager.dmSans,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 14),
-                                )
-                              ],
-                            ),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: StringManager.dmSans),
                           ),
-                        )
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const DriversRegistration()),
+                              );
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 8),
+                              height: 60,
+                              width: 200,
+                              decoration: BoxDecoration(
+                                  color: newPrimaryColor,
+                                  borderRadius: BorderRadius.circular(8.0)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.add),
+                                    color: Colors.white,
+                                    iconSize: 25,
+                                  ),
+                                  const Text(
+                                    StringManager.createDriver,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: StringManager.dmSans,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      columns: const [
+                        DataColumn(
+                            label: Text(
+                          StringManager.sN,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700),
+                        )),
+                        DataColumn(
+                            label: Text(
+                          StringManager.name,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700),
+                        )),
+                        DataColumn(
+                            label: Text(
+                          StringManager.emailAddress,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700),
+                        )),
+                        DataColumn(
+                            label: Text(
+                          StringManager.phoneNumber,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700),
+                        )),
+                        DataColumn(
+                            label: Text(
+                          StringManager.status,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700),
+                        )),
+                        DataColumn(
+                            label: Text(
+                          StringManager.location,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700),
+                        )),
                       ],
-                    ),
-                    columns: const [
-                      DataColumn(
-                          label: Text(
-                        StringManager.sN,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700),
-                      )),
-                      DataColumn(
-                          label: Text(
-                        StringManager.name,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700),
-                      )),
-                      DataColumn(
-                          label: Text(
-                        StringManager.emailAddress,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700),
-                      )),
-                      DataColumn(
-                          label: Text(
-                        StringManager.phoneNumber,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700),
-                      )),
-                      DataColumn(
-                          label: Text(
-                        StringManager.status,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700),
-                      )),
-                      DataColumn(
-                          label: Text(
-                        StringManager.location,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700),
-                      )),
-                    ],
-                    source: DriversTableSource(
-                      paginatedData,
-                      onRowTap: (driver) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DriversDetailsPage(
-                              driver: driver,
+                      source: DriversTableSource(
+                        paginatedData,
+                        onRowTap: (driver) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DriversDetailsPage(
+                                driver: driver,
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        },
+                      ),
+                      rowsPerPage: _rowsPerPage,
+                      availableRowsPerPage: const [5, 10, 20],
+                      onPageChanged: (int pageIndex) {
+                        setState(() {
+                          _currentPage = pageIndex + 1;
+                        });
+                      },
+                      onRowsPerPageChanged: (int? selectedRowsPerPage) {
+                        setState(() {
+                          _rowsPerPage = selectedRowsPerPage!;
+                        });
                       },
                     ),
-                    rowsPerPage: _rowsPerPage,
-                    availableRowsPerPage: const [5, 10, 20],
-                    onPageChanged: (int pageIndex) {
-                      setState(() {
-                        _currentPage = pageIndex + 1;
-                      });
-                    },
-                    onRowsPerPageChanged: (int? selectedRowsPerPage) {
-                      setState(() {
-                        _rowsPerPage = selectedRowsPerPage!;
-                      });
-                    },
                   ),
                 ),
               ),
