@@ -144,83 +144,85 @@ class _PassengersPageState extends State<PassengersPage> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: PaginatedDataTable(
-                    horizontalMargin: 12,
-                    header: const Text(
-                      StringManager.passengers,
-                      style: TextStyle(
-                          color: newPrimaryColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: StringManager.dmSans),
-                    ),
-                    columns: const [
-                      DataColumn(
-                          label: Text(
-                            StringManager.sN,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700),
-                          )),
-                      DataColumn(
-                          label: Text(
-                            StringManager.name,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700),
-                          )),
-                      DataColumn(
-                          label: Text(
-                            StringManager.emailAddress,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700),
-                          )),
-                      DataColumn(
-                          label: Text(
-                            StringManager.phoneNumber,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700),
-                          )),
-                      DataColumn(
-                          label: Text(
-                            StringManager.location,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700),
-                          )),
-                    ],
-                    source: PassengersTableSource(
-                      paginatedData,
-                      onRowTap: (user) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PassengersDetailsPage(
-                              user: user,
+                  child: SingleChildScrollView(
+                    child: PaginatedDataTable(
+                      horizontalMargin: 12,
+                      header: const Text(
+                        StringManager.passengers,
+                        style: TextStyle(
+                            color: newPrimaryColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: StringManager.dmSans),
+                      ),
+                      columns: const [
+                        DataColumn(
+                            label: Text(
+                              StringManager.sN,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700),
+                            )),
+                        DataColumn(
+                            label: Text(
+                              StringManager.name,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700),
+                            )),
+                        DataColumn(
+                            label: Text(
+                              StringManager.emailAddress,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700),
+                            )),
+                        DataColumn(
+                            label: Text(
+                              StringManager.phoneNumber,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700),
+                            )),
+                        DataColumn(
+                            label: Text(
+                              StringManager.location,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700),
+                            )),
+                      ],
+                      source: PassengersTableSource(
+                        paginatedData,
+                        onRowTap: (user) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PassengersDetailsPage(
+                                user: user,
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        },
+                      ),
+                      rowsPerPage: _rowsPerPage,
+                      availableRowsPerPage: const [5, 10, 20],
+                      onPageChanged: (int pageIndex) {
+                        setState(() {
+                          _currentPage = pageIndex + 1;
+                        });
+                      },
+                      onRowsPerPageChanged: (int? selectedRowsPerPage) {
+                        setState(() {
+                          _rowsPerPage = selectedRowsPerPage!;
+                        });
                       },
                     ),
-                    rowsPerPage: _rowsPerPage,
-                    availableRowsPerPage: const [5, 10, 20],
-                    onPageChanged: (int pageIndex) {
-                      setState(() {
-                        _currentPage = pageIndex + 1;
-                      });
-                    },
-                    onRowsPerPageChanged: (int? selectedRowsPerPage) {
-                      setState(() {
-                        _rowsPerPage = selectedRowsPerPage!;
-                      });
-                    },
                   ),
                 ),
               ),

@@ -11,4 +11,5 @@ const String registerRoute = "register";
 const String pageControllerRoute = "page";
 const String dashboardContentRoute = "content";
 const String passengersDetailsRoute = "passengersDetails";
+const String notificationsRoute = "passengersDetails";
 
