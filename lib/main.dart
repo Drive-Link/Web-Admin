@@ -4,6 +4,7 @@ import 'package:drivelink_admin/provider/auth_provider.dart';
 import 'package:drivelink_admin/provider/tables.dart';
 import 'package:drivelink_admin/routing/route_names.dart';
 import 'package:drivelink_admin/routing/router.dart';
+import 'package:drivelink_admin/views/MOBILE_VIEW/login/login_view.dart';
 import 'package:drivelink_admin/views/auth/login.dart';
 import 'package:drivelink_admin/views/home/dashboard_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       onGenerateRoute: generateRoute,
       initialRoute: pageControllerRoute,
-      home: LoginScreen(),
+      home: Login(),
     );
   }
 }
@@ -75,14 +76,14 @@ class AppPagesController extends StatelessWidget {
           print(authProvider.status.toString());
           switch (authProvider.status) {
             case Status.Uninitialized:
-              return const LoginScreen();
+              return const Login();
             case Status.Unauthenticated:
             case Status.Authenticating:
-              return const LoginScreen();
+              return const Login();
             case Status.Authenticated:
               return const DashboardScreen();
             default:
-              return const LoginScreen();
+              return const Login();
           }
         }
 
