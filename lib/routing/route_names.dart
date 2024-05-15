@@ -11,5 +11,11 @@ const String registerRoute = "register";
 const String pageControllerRoute = "page";
 const String dashboardContentRoute = "content";
 const String passengersDetailsRoute = "passengersDetails";
-const String notificationsRoute = "passengersDetails";
+const String notificationsRoute = "notifications_route";
+const String mobileDashboardContentRoute = "mobile_dashboard";
+const String mobileDriversRoute = "mobile_drivers";
+const String allTripsRoute = "all_trips";
+const String completedTripsRoute = "completed_trips";
+const String cancelledTripsRoute = "cancelled_trips";
+const String mobileNotificationsRoute = "mobile_notifications_route";
 

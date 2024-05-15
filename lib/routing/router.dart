@@ -1,4 +1,11 @@
 import 'package:drivelink_admin/routing/route_names.dart';
+import 'package:drivelink_admin/views/MOBILE_VIEW/dashboard/mobile.dart';
+import 'package:drivelink_admin/views/MOBILE_VIEW/drivers/mobile.dart';
+import 'package:drivelink_admin/views/MOBILE_VIEW/notifications/mobile.dart';
+import 'package:drivelink_admin/views/MOBILE_VIEW/trips/pages/all_trips.dart';
+import 'package:drivelink_admin/views/MOBILE_VIEW/trips/pages/cancelled_trips.dart';
+import 'package:drivelink_admin/views/MOBILE_VIEW/trips/pages/completed_trips.dart';
+import 'package:drivelink_admin/views/MOBILE_VIEW/verification/mobile.dart';
 import 'package:drivelink_admin/views/auth/login.dart';
 import 'package:drivelink_admin/views/auth/register.dart';
 import 'package:drivelink_admin/views/components/dashboard_content.dart';
@@ -44,7 +51,19 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(const Register());
     case notificationsRoute:
       return _getPageRoute(const NotificationsPage());
-    default:
+    case mobileDashboardContentRoute:
+      return _getPageRoute(const MobileDashboardContent());
+    case mobileDriversRoute:
+      return _getPageRoute(const MobileDriversPage());
+    case allTripsRoute:
+      return _getPageRoute(const AllTripsPage());
+    case completedTripsRoute:
+      return _getPageRoute(const CompletedTripsPage());
+    case cancelledTripsRoute:
+      return _getPageRoute(const CancelledTripsPage());
+    case mobileNotificationsRoute:
+      return _getPageRoute(const MobileNotificationsPage());
+      default:
       return _getPageRoute(const LoginScreen());
   }
 }
