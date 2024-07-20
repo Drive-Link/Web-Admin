@@ -2,6 +2,10 @@ import 'package:drivelink_admin/constants/colors.dart';
 import 'package:drivelink_admin/resources/string_manager.dart';
 import 'package:drivelink_admin/views/components/custom_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' as http;
+import '../../helpers/custom_textfield.dart';
+import 'dart:convert';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({super.key});
@@ -13,6 +17,43 @@ class NotificationsPage extends StatefulWidget {
 class _NotificationsPageState extends State<NotificationsPage> {
   String userValue = 'Users';
   var userType = ['Users', 'Drivers'];
+  final TextEditingController _notificationTitleController =
+      TextEditingController();
+  final TextEditingController _notificationBodyController =
+      TextEditingController();
+
+  @override
+  void dispose() {
+    _notificationTitleController.dispose();
+    _notificationBodyController.dispose();
+    super.dispose();
+  }
+
+  Future<void> sendNotification(String title, String body) async {
+    const url =
+        'https://drivelinkapp-f32cd.cloudfunctions.net/sendNotification';
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode({
+          'title': title,
+          'body': body,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        print('Notification sent');
+      } else {
+        print(
+            'Error sending notification: ${response.statusCode} - ${response.body}');
+      }
+    } catch (e) {
+      print('Error sending notification: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +87,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                               onTap: () {
                                 Navigator.pop(context);
                               },
-                              child: Icon(
+                              child: const Icon(
                                 Icons.arrow_back_sharp,
                                 size: 20,
                                 color: newPrimaryColor,
@@ -54,7 +95,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                           const SizedBox(
                             width: 10,
                           ),
-                          Text(
+                          const Text(
                             'Send Notifications',
                             style: TextStyle(
                                 color: newPrimaryColor,
@@ -67,7 +108,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Text(StringManager.kindly,
+                      const Text(StringManager.kindly,
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 16,
@@ -112,29 +153,52 @@ class _NotificationsPageState extends State<NotificationsPage> {
                       const SizedBox(
                         height: 20,
                       ),
-                      textBox(StringManager.notificationTitle, 1),
+                      CustomTextField(
+                        hintText: StringManager.notificationTitle,
+                        controller: _notificationTitleController,
+                        suffixIcon: const Icon(
+                          Icons.topic,
+                          color: showHideColor,
+                          size: 20,
+                        ),
+                      ),
                       const SizedBox(
                         height: 20,
                       ),
-                      textBox(StringManager.message, 5),
+                      CustomTextField(
+                        hintText: StringManager.message,
+                        controller: _notificationBodyController,
+                        suffixIcon: const Icon(
+                          Icons.message,
+                          color: showHideColor,
+                          size: 20,
+                        ),
+                      ),
                       const SizedBox(
                         height: 50,
                       ),
-                      Container(
-                        width: 400,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: newPrimaryColor),
-                        height: 45,
-                        child: Center(
-                            child: Text(
-                          StringManager.send.toUpperCase(),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: StringManager.dmSans,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14),
-                        )),
+                      GestureDetector(
+                        onTap: () async {
+                          await sendNotification(
+                            _notificationTitleController.text,
+                            _notificationBodyController.text,
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: newPrimaryColor),
+                          height: 45,
+                          child: Center(
+                              child: Text(
+                            StringManager.send.toUpperCase(),
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontFamily: StringManager.dmSans,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14),
+                          )),
+                        ),
                       ),
                     ],
                   ),
@@ -153,7 +217,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
       child: TextFormField(
         maxLength: 600,
         maxLines: maxLines,
-        style: TextStyle(
+        style: const TextStyle(
           fontWeight: FontWeight.w400,
           decoration: TextDecoration.none,
           fontSize: 16,
@@ -186,7 +250,3 @@ class _NotificationsPageState extends State<NotificationsPage> {
     );
   }
 }
-
-//Group SizedBox
-//Create PR
-//Check renderFlex
